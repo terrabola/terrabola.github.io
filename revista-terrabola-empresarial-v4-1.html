@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+
+<html lang="pt">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TerraBola — Jornal Digital de Moçambique | Ao Vivo</title>
+<meta content="TerraBola: jornal digital moçambicano com cobertura de futebol, agricultura e factos reais. Informação editorial com actualização permanente." name="description"/>
+<style>
+:root {
+  --red: #e10600;
+  --red-dark: #b30500;
+  --bg: #0a0a0a;
+  --surface: #111111;
+  --surface2: #161616;
+  --border: #2a2a2a;
+  --text: #f2f2f2;
+  --muted: #9a9a9a;
+  --green: #00e676;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Arial, Helvetica, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; cursor: pointer; }
+img { max-width: 100%; height: auto; display: block; }
+
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+/* TOP MARQUEE */
+.marquee-top {
+  background: #000;
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+.marquee-top span { display: inline-block; padding-left: 100%; animation: marquee 42s linear infinite; }
+.marquee-top strong { color: #ff3b5c; margin-right: 6px; }
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+/* HEADER */
+.top-bar {
+  background: #000;
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0 10px;
+}
+.top-bar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.logo {
+  font-family: Arial Black, Arial, sans-serif;
+  font-size: 34px;
+  color: var(--red);
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.logo span { color: #fff; }
+.nav-main {
+  display: flex;
+  gap: 26px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #c8c8c8;
+}
+.nav-main a:hover { color: var(--red); }
+.header-right { display: none; }
+.top-bar, .cat-bar, .hero, .section, footer, .page { width: 100%; max-width: 100%; }
+
+.search-box {
+  display: flex;
+  margin-top: 12px;
+  max-width: 640px;
+}
+.search-box input {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: #fff;
+  padding: 11px 16px;
+  font-size: 14px;
+  outline: none;
+}
+.search-box input::placeholder { color: #666; }
+.search-box button {
+  background: var(--red);
+  color: #fff;
+  border: none;
+  padding: 0 22px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+}
+.search-box button:hover { background: var(--red-dark); }
+
+/* CATEGORIES */
+.cat-bar {
+  background: #000;
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+}
+.cat-bar-inner {
+  display: flex;
+  gap: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.cat-bar a {
+  flex-shrink: 0;
+  padding: 13px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #a0a0a0;
+  border-bottom: 2px solid transparent;
+}
+.cat-bar a:hover { color: #fff; }
+.cat-bar a.active {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
+
+/* HERO */
+.hero { padding: 28px 0 36px; background: var(--bg); }
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+  align-items: stretch;
+}
+.hero-cover { display: none; }
+
+.hero-main-wrap { display: flex; flex-direction: column; min-height: 480px; }
+.live-marquee {
+  background: #031a0a;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  letter-spacing: 0.4px;
+  border: 1px solid #0a3d1f;
+}
+.live-marquee span { display: inline-block; padding-left: 100%; animation: marquee 30s linear infinite; }
+
+.hero-main {
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-height: 420px;
+  background: #111;
+}
+.hero-main .hero-slides { position: absolute; inset: 0; }
+.hero-main .hero-slides img {
+  width: 100%; height: 100%; object-fit: cover;
+  position: absolute; inset: 0;
+  opacity: 0; transition: opacity 0.7s ease;
+}
+.hero-main .hero-slides img.active { opacity: 1; }
+.hero-main-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.15) 100%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 32px 28px; z-index: 2; color: #fff;
+}
+.live-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--green);
+  color: var(--green);
+  font-size: 11px; font-weight: 800;
+  padding: 5px 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  width: fit-content;
+}
+.live-dot {
+  width: 9px; height: 9px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: livePulse 1s ease-in-out infinite;
+  box-shadow: 0 0 10px var(--green);
+}
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(0.8); }
+}
+.badge {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-size: 10px; font-weight: 800;
+  padding: 4px 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  width: fit-content;
+}
+.hero-main h1 {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.2;
+  max-width: 92%;
+  margin-bottom: 10px;
+}
+.hero-meta { font-size: 13px; color: #ccc; margin-bottom: 16px; }
+.btn-ler {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  padding: 11px 22px;
+  font-size: 13px;
+  font-weight: 700;
+  width: fit-content;
+}
+.btn-ler:hover { background: var(--red-dark); }
+.btn-vermelho {
+  display: inline-block;
+  background: #fff;
+  color: var(--red);
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.btn-vermelho:hover { background: #eee; }
+
+.hero-side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.hero-side-card {
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-height: 210px;
+  background: #111;
+}
+.hero-side-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  position: absolute; inset: 0;
+}
+.hero-side-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.88), transparent 55%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 16px; color: #fff;
+}
+.hero-side-overlay h3 {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* SECTIONS */
+.section { padding: 40px 0; background: var(--bg); }
+.section-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 22px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--red);
+  display: inline-block;
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+.section-header .section-title { margin-bottom: 0; }
+.ver-todas {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.ver-todas:hover { text-decoration: underline; }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover {
+  border-color: #444;
+  transform: translateY(-3px);
+}
+.card img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+}
+.card-body { padding: 14px 14px 16px; flex: 1; display: flex; flex-direction: column; }
+.card-cat {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 7px;
+}
+.card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #f0f0f0;
+  margin-bottom: 10px;
+  flex: 1;
+}
+.card-meta { font-size: 11px; color: var(--muted); }
+
+.destaque-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+}
+.destaque-grande {
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+  background: #111;
+}
+.destaque-grande img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  position: absolute; inset: 0;
+}
+.destaque-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, transparent 55%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 28px; color: #fff;
+}
+.destaque-overlay h2 {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.lista-lateral { display: flex; flex-direction: column; gap: 12px; }
+.item-lateral {
+  display: flex;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 10px;
+  transition: border-color 0.2s;
+}
+.item-lateral:hover { border-color: #444; }
+.item-lateral img {
+  width: 110px;
+  height: 78px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.item-lateral h4 {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #f0f0f0;
+  margin-bottom: 6px;
+}
+
+/* ARTICLE */
+.page { display: none; background: var(--bg); }
+.page.active { display: block; }
+.artigo-header {
+  background: var(--bg);
+  padding: 36px 0 24px;
+  border-bottom: 1px solid var(--border);
+}
+.artigo-cat {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+.artigo-header h1 {
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.2;
+  max-width: 900px;
+  margin-bottom: 14px;
+  color: #fff;
+}
+.artigo-meta {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--muted);
+}
+.artigo-img-principal {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  margin: 28px 0;
+}
+.artigo-conteudo {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 10px 24px 56px;
+  font-size: 18px;
+  line-height: 1.75;
+  color: #d6d6d6;
+}
+.artigo-conteudo p { margin-bottom: 20px; }
+.artigo-conteudo h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  margin: 32px 0 14px;
+}
+.artigo-conteudo h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #eee;
+  margin: 24px 0 12px;
+}
+.voltar {
+  display: inline-block;
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--red);
+}
+.voltar:hover { text-decoration: underline; }
+
+/* FOOTER */
+footer {
+  background: #000;
+  color: #888;
+  padding: 48px 0 24px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+}
+.footer-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 36px;
+  margin-bottom: 36px;
+}
+.footer-grid h4 {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 16px;
+}
+.footer-grid p { line-height: 1.7; margin-bottom: 10px; }
+.footer-grid a { display: block; margin-bottom: 8px; color: #777; }
+.footer-grid a:hover { color: var(--red); }
+.footer-bottom {
+  border-top: 1px solid #1a1a1a;
+  padding-top: 18px;
+  text-align: center;
+  font-size: 12px;
+  color: #555;
+}
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-side { flex-direction: row; }
+  .hero-side-card { min-height: 180px; }
+  .hero-main-wrap { min-height: 400px; }
+  .hero-main { min-height: 360px; }
+  .hero-main h1 { font-size: 28px; }
+  .cards-grid { grid-template-columns: repeat(2, 1fr); }
+  .destaque-grid { grid-template-columns: 1fr; }
+  .destaque-grande { min-height: 320px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .nav-main { display: none; }
+}
+
+/* MOBILE */
+@media (max-width: 640px) {
+  .container { padding: 0 14px; }
+  .logo { font-size: 26px; }
+  .search-box { max-width: 100%; }
+  .search-box input { padding: 10px 12px; font-size: 13px; }
+  .cat-bar a { padding: 11px 12px; font-size: 11px; }
+  .hero { padding: 14px 0 20px; }
+  .hero-side { flex-direction: column; gap: 10px; }
+  .hero-side-card { min-height: 150px; }
+  .hero-main-wrap { min-height: 340px; }
+  .hero-main { min-height: 300px; }
+  .hero-main-overlay { padding: 16px; }
+  .hero-main h1 { font-size: 20px; max-width: 100%; }
+  .hero-meta { font-size: 12px; }
+  .btn-ler { width: 100%; text-align: center; padding: 12px; }
+  .live-marquee { font-size: 10px; }
+  .section { padding: 28px 0; }
+  .section-title { font-size: 22px; }
+  .cards-grid { grid-template-columns: 1fr; gap: 14px; }
+  .card img { height: 190px; }
+  .card h3 { font-size: 17px; }
+  .destaque-grande { min-height: 260px; }
+  .destaque-overlay { padding: 16px; }
+  .destaque-overlay h2 { font-size: 20px; }
+  .item-lateral img { width: 88px; height: 68px; }
+  .item-lateral h4 { font-size: 14px; }
+  .artigo-header { padding: 22px 0 16px; }
+  .artigo-header h1 { font-size: 24px; }
+  .artigo-img-principal { max-height: 220px; margin: 16px 0; }
+  .artigo-conteudo { padding: 8px 14px 40px; font-size: 16px; }
+  .artigo-conteudo h2 { font-size: 20px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 22px; }
+  footer { padding: 32px 0 18px; }
+}
+
+/* RESPONSIVIDADE REFORÇADA */
+html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+body { min-width: 0; }
+img, video, iframe { max-width: 100%; }
+button, input { max-width: 100%; }
+
+@media (max-width: 768px) {
+  .container { width: 100%; max-width: 100%; padding-left: 14px; padding-right: 14px; }
+  .top-bar { padding: 11px 0 10px; }
+  .top-bar-inner { display: block; }
+  .logo { display: block; font-size: 25px; margin-bottom: 10px; }
+  .search-box { width: 100%; display: flex; margin-top: 0; }
+  .search-box input { min-width: 0; width: 100%; }
+  .search-box button { flex: 0 0 auto; padding: 0 14px; }
+  .cat-bar-inner { width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .cat-bar-inner::-webkit-scrollbar { display: none; }
+  .hero-grid, .destaque-grid, .footer-grid { width: 100%; }
+  .hero-main h1 { overflow-wrap: anywhere; }
+  .artigo-header h1, .artigo-conteudo { overflow-wrap: anywhere; }
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* PÁGINAS INSTITUCIONAIS */
+.legal-page { background: var(--bg); min-height: 55vh; padding: 34px 0 60px; }
+.legal-wrap { max-width: 850px; margin: 0 auto; }
+.legal-page h1 { font-size: 34px; line-height: 1.2; margin-bottom: 10px; color: #fff; }
+.legal-page .legal-updated { color: var(--muted); font-size: 12px; margin-bottom: 28px; }
+.legal-page h2 { color: #fff; font-size: 21px; margin: 28px 0 10px; }
+.legal-page p, .legal-page li { color: #c8c8c8; font-size: 16px; line-height: 1.75; }
+.legal-page p { margin-bottom: 14px; }
+.legal-page ul { padding-left: 22px; margin-bottom: 16px; }
+.legal-page a { color: var(--red); }
+.legal-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.legal-actions a { display: inline-flex; align-items: center; justify-content: center; padding: 11px 16px; background: var(--surface); border: 1px solid var(--border); color: #fff; font-weight: 700; font-size: 13px; }
+.legal-actions a:hover { border-color: var(--red); color: var(--red); }
+
+@media (max-width: 640px) {
+  .legal-page { padding: 24px 0 42px; }
+  .legal-page h1 { font-size: 27px; }
+  .legal-page h2 { font-size: 19px; }
+  .legal-page p, .legal-page li { font-size: 15px; line-height: 1.65; }
+  .legal-actions a { width: 100%; }
+}
+
+/* BOTÃO FLUTUANTE DO WHATSAPP */
+.whatsapp-float {
+  position: fixed;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  z-index: 9999;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #25D366;
+  color: #fff !important;
+  box-shadow: 0 5px 18px rgba(0,0,0,.45);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.whatsapp-float:hover { transform: scale(1.05); }
+.whatsapp-float span { font-size: 27px; }
+
+@media (max-width: 640px) {
+  .whatsapp-float {
+    width: 52px;
+    height: 52px;
+    right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+  }
+}
+
+
+/* ===== EXPERIÊNCIA EDITORIAL EMPRESARIAL ===== */
+:root{--gold:#d6a84f;--blue:#1687ff;--green:#00e676;--shadow:0 18px 55px rgba(0,0,0,.35)}
+body{overflow-x:hidden}
+.page{min-width:0;overflow:hidden}
+.artigo-header{position:relative;isolation:isolate;min-height:430px;padding:0!important;display:flex;align-items:flex-end;overflow:hidden;background:#070707;border-bottom:1px solid #252525}
+.artigo-header::before{content:"";position:absolute;inset:0;background-image:var(--article-bg);background-size:cover;background-position:center;filter:saturate(.9) contrast(1.08);transform:scale(1.03);z-index:-3}
+.artigo-header::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.22) 0%,rgba(0,0,0,.5) 42%,rgba(0,0,0,.97) 100%),linear-gradient(90deg,rgba(0,0,0,.78),rgba(0,0,0,.15));z-index:-2}
+.artigo-header .container{width:100%;padding-top:55px;padding-bottom:42px;position:relative}
+.article-kicker{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 15px}
+.article-kicker span{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.58);backdrop-filter:blur(8px);font-size:10px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#fff}
+.article-kicker .live-now{border-color:rgba(0,230,118,.7);color:var(--green)}
+.article-kicker .live-now i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(0,230,118,.65);animation:livePulse2 1.4s infinite}
+@keyframes livePulse2{70%{box-shadow:0 0 0 7px rgba(0,230,118,0)}100%{box-shadow:0 0 0 0 rgba(0,230,118,0)}}
+.artigo-header h1{font-size:clamp(30px,4.2vw,58px)!important;max-width:1050px!important;letter-spacing:-1.3px;text-shadow:0 3px 22px rgba(0,0,0,.55);margin-bottom:16px!important}
+.artigo-cat{font-weight:900!important;letter-spacing:1.2px!important;text-shadow:0 2px 10px #000}
+.artigo-meta{align-items:center!important;gap:9px!important}
+.artigo-meta span{display:inline-flex;align-items:center;min-height:30px;padding:5px 10px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(7px);color:#ddd!important}
+.article-tools{max-width:980px;margin:-28px auto 0;position:relative;z-index:5;padding:0 24px}
+.article-tools-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;background:rgba(17,17,17,.94);border:1px solid #292929;box-shadow:var(--shadow);backdrop-filter:blur(12px)}
+.article-status{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:800;color:#aaa;text-transform:uppercase;letter-spacing:.6px}
+.article-status strong{color:#fff}.article-status .status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+.article-actions{display:flex;gap:7px;flex-wrap:wrap}.article-actions button{border:1px solid #333;background:#191919;color:#ddd;padding:8px 11px;font-size:11px;font-weight:800;cursor:pointer}.article-actions button:hover{border-color:var(--red);color:#fff}
+.reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,var(--red),var(--gold));z-index:9999;box-shadow:0 0 10px rgba(225,6,0,.5)}
+.article-stat{color:#888;font-size:11px;margin-left:4px}
+.artigo-img-principal{max-height:540px;min-height:260px;object-fit:cover;border:1px solid #222;box-shadow:0 22px 60px rgba(0,0,0,.28);margin:34px auto 28px!important}
+.artigo-conteudo{position:relative}
+.artigo-conteudo::before{content:"REVISTA TERRABOLA  •  REPORTAGEM";display:block;color:#555;font-size:10px;font-weight:900;letter-spacing:1.8px;margin:0 0 20px}
+.article-share-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 auto 24px;max-width:760px;padding:12px 0;border-top:1px solid #202020;border-bottom:1px solid #202020}
+.article-share-line span{font-size:10px;font-weight:900;color:#666;text-transform:uppercase;letter-spacing:1px;margin-right:4px}
+.article-share-line button{border:1px solid #2b2b2b;background:#111;color:#ccc;padding:7px 10px;font-size:11px;font-weight:800;cursor:pointer}
+.article-share-line button:hover{color:#fff;border-color:var(--red)}
+.article-updated{font-size:11px!important;color:#aaa!important}
+.article-reading{font-size:11px!important;color:#aaa!important}
+.whatsapp-float{box-shadow:0 10px 35px rgba(0,230,118,.28);transition:transform .2s,box-shadow .2s;z-index:9998}.whatsapp-float:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 14px 40px rgba(0,230,118,.4)}
+/* cartões com sensação editorial premium */
+.card,.item-lateral,.destaque-grande{border-radius:4px}.card{box-shadow:0 10px 30px rgba(0,0,0,.15)}
+.card::after{content:"LEITURA RECENTE";position:absolute;top:10px;left:10px;background:rgba(0,0,0,.76);color:#fff;padding:5px 7px;font-size:8px;font-weight:900;letter-spacing:1px;border:1px solid rgba(255,255,255,.18);opacity:.9}
+.card{position:relative}.card img{transition:transform .45s ease,filter .45s ease}.card:hover img{transform:scale(1.035);filter:saturate(1.08)}
+/* mobile-first: nunca deixar o site assumir largura de PC */
+@media(max-width:640px){
+ .container{width:100%;max-width:100%;padding-left:12px;padding-right:12px}
+ .top-bar-inner{gap:10px}.logo{font-size:25px}.search-box{width:100%;display:grid;grid-template-columns:1fr auto}.search-box button{padding:0 13px}
+ .artigo-header{min-height:390px}.artigo-header .container{padding-top:42px;padding-bottom:28px}.artigo-header h1{font-size:27px!important;line-height:1.16!important;letter-spacing:-.6px}.article-kicker span{font-size:8px;padding:5px 8px}.artigo-meta{gap:5px!important}.artigo-meta span{font-size:10px;padding:5px 7px}
+ .article-tools{margin:-20px 0 0;padding:0 10px}.article-tools-inner{display:block;padding:10px}.article-status{margin-bottom:8px;font-size:9px}.article-actions{display:grid;grid-template-columns:repeat(3,1fr)}.article-actions button{width:100%;padding:9px 5px;font-size:9px}
+ .artigo-img-principal{min-height:190px;max-height:300px;margin:24px auto 20px!important}.artigo-conteudo{padding-left:12px;padding-right:12px}.article-share-line{margin-left:0;margin-right:0}.article-share-line button{padding:7px 8px;font-size:10px}
+ .footer-grid{grid-template-columns:1fr!important}.nav-main{display:none}.cat-bar-inner{max-width:100%;overflow-x:auto}.hero-grid{grid-template-columns:1fr!important}.hero-side{display:grid;grid-template-columns:1fr}.cards-grid{grid-template-columns:1fr!important}.destaque-grid{grid-template-columns:1fr!important}
+}
+@media(min-width:641px) and (max-width:1024px){.artigo-header{min-height:410px}.artigo-header h1{font-size:40px!important}.article-tools{padding:0 18px}}
+
+
+/* ===== TERRABOLA CORPORATE REDESIGN v3 ===== */
+:root{--tb-red:#d90416;--tb-red2:#ff2338;--tb-black:#050608;--tb-panel:#0d1014;--tb-line:#20252b;--tb-white:#fff;--tb-muted:#9aa2ad;--tb-live:#18e56d}
+body{background:#050608;color:#f5f7fa;font-family:Inter,Arial,Helvetica,sans-serif}
+.top-bar{background:rgba(5,6,8,.97)!important;position:sticky;top:0;z-index:900;border-bottom:1px solid #252a31!important;backdrop-filter:blur(14px)}
+.top-bar-inner{min-height:72px!important}.logo{font-size:29px!important;letter-spacing:-1.5px!important}.logo:before{content:'TB';display:inline-grid;place-items:center;width:38px;height:38px;margin-right:10px;background:var(--tb-red);color:#fff;border-radius:9px;font-size:14px;letter-spacing:0}.nav-main{font-size:13px!important;gap:22px!important}.nav-main a{transition:.2s}.nav-main a:hover{color:#fff!important;background:var(--tb-red);padding:9px 12px;border-radius:7px}
+.marquee-top{background:var(--tb-red)!important;color:#fff!important;border:0!important;font-weight:800!important}.marquee-top strong{color:#fff!important}
+.cat-bar{background:#080a0d!important;border-bottom:1px solid #222830!important}.cat-bar a{padding:14px 16px!important;color:#8f98a3!important}.cat-bar a.active,.cat-bar a:hover{color:#fff!important;border-bottom-color:var(--tb-red)!important}
+/* corporate home */
+.hero{padding:26px 0 44px!important;background:linear-gradient(180deg,#07090c,#050608)!important}.hero-main{border-radius:18px!important;border:1px solid #292f37;box-shadow:0 22px 70px rgba(0,0,0,.5)}.hero-main-overlay{padding:38px!important}.hero-main-overlay h1{font-size:clamp(28px,4vw,52px)!important;max-width:900px!important;letter-spacing:-1.2px!important}.live-badge{background:var(--tb-red)!important;border:0!important;color:#fff!important;border-radius:999px!important}.live-dot{background:#fff!important;box-shadow:0 0 12px #fff!important}.hero-side-card{border-radius:15px!important;overflow:hidden;border:1px solid #272d35!important}.hero-side-card img{transition:transform .6s}.hero-side-card:hover img{transform:scale(1.06)}
+/* post header: unmistakable */
+.artigo-header{position:relative!important;min-height:470px!important;display:flex!important;align-items:flex-end!important;overflow:hidden!important;background:#090b0f!important;border-bottom:1px solid #282e36!important;background-image:linear-gradient(180deg,rgba(5,6,8,.05),rgba(5,6,8,.96)),var(--article-bg)!important;background-size:cover!important;background-position:center!important;padding:0 0 42px!important}
+.artigo-header:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,6,8,.94) 0%,rgba(5,6,8,.68) 45%,rgba(5,6,8,.18) 100%);z-index:0}
+.artigo-header .container{position:relative;z-index:2;width:100%}.artigo-header .voltar{display:inline-flex!important;align-items:center;gap:7px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.2);padding:8px 12px;border-radius:8px;color:#fff!important;margin-bottom:24px!important}.artigo-header h1{font-size:clamp(34px,5vw,64px)!important;line-height:1.03!important;max-width:980px!important;letter-spacing:-2px!important;text-shadow:0 5px 25px rgba(0,0,0,.6)}.artigo-cat{display:inline-block!important;color:#fff!important;background:var(--tb-red)!important;padding:7px 11px!important;border-radius:5px!important;font-weight:900!important;letter-spacing:.8px!important;margin-bottom:14px!important}.artigo-meta{color:#c8cdd3!important;margin-top:18px!important}.article-kicker{display:flex!important;gap:9px!important;flex-wrap:wrap!important;margin-bottom:12px!important}.article-kicker>*{font-size:10px!important;font-weight:900!important;letter-spacing:1px!important;padding:6px 9px!important;border-radius:999px!important;border:1px solid rgba(255,255,255,.2)!important;background:rgba(0,0,0,.38)!important}.article-kicker .live-now{color:#fff!important;background:var(--tb-red)!important;border-color:var(--tb-red)!important}.live-now i{background:#fff!important;width:7px!important;height:7px!important;display:inline-block!important;border-radius:50%!important;margin-right:5px!important;box-shadow:0 0 9px #fff!important}
+.article-tools{position:sticky!important;top:72px!important;z-index:700!important;background:rgba(8,10,13,.95)!important;border-bottom:1px solid #252b33!important;backdrop-filter:blur(14px)!important}.article-tools-inner{max-width:1280px;margin:auto;padding:10px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px}.article-status{font-size:11px;color:#b9c0c9;display:flex;align-items:center;gap:8px}.status-dot{width:8px;height:8px;border-radius:50%;background:var(--tb-live);box-shadow:0 0 10px var(--tb-live);animation:tbPulse 1.3s infinite}.article-actions{display:flex;gap:7px}.article-actions button,.article-share-line button{background:#151a20!important;color:#fff!important;border:1px solid #303740!important;border-radius:7px!important;padding:8px 11px!important;font-size:11px!important;font-weight:800!important}.article-actions button:hover,.article-share-line button:hover{background:var(--tb-red)!important;border-color:var(--tb-red)!important}.artigo-img-principal{border-radius:16px!important;border:1px solid #252b33!important;box-shadow:0 18px 50px rgba(0,0,0,.35)!important;margin-top:28px!important}.artigo-conteudo{font-size:19px!important;max-width:820px!important;color:#dfe3e8!important}.artigo-conteudo h2{font-size:30px!important;color:#fff!important;border-left:4px solid var(--tb-red);padding-left:14px}.article-share-line{display:flex!important;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 25px!important;padding:12px;border:1px solid #252b33;background:#0b0e12;border-radius:10px!important}.article-share-line>span:first-child{font-weight:900!important;color:#fff!important;margin-right:4px}.article-reading{margin-left:auto!important;color:#8d96a1!important;font-size:11px!important}
+/* cards / pages */
+.section{padding:44px 0!important}.section-title{font-size:28px!important;letter-spacing:-.5px!important}.section-title:after{background:var(--tb-red)!important}.card,.news-card,.article-card{border:1px solid #252b33!important;background:#0c0f13!important;border-radius:14px!important;overflow:hidden!important;transition:transform .25s,border-color .25s,box-shadow .25s}.card:hover,.news-card:hover,.article-card:hover{transform:translateY(-4px);border-color:#4b525c!important;box-shadow:0 18px 45px rgba(0,0,0,.3)}
+/* live freshness */
+.tb-fresh{display:inline-flex;align-items:center;gap:6px;color:#fff;background:var(--tb-red);font-size:10px;font-weight:900;letter-spacing:.8px;padding:5px 8px;border-radius:5px;text-transform:uppercase}.tb-fresh i{width:6px;height:6px;background:#fff;border-radius:50%;animation:tbPulse 1.1s infinite}@keyframes tbPulse{50%{opacity:.35;transform:scale(.72)}}
+.whatsapp-float{width:58px!important;height:58px!important;right:18px!important;bottom:18px!important;border-radius:50%!important;background:#19d765!important;box-shadow:0 12px 35px rgba(0,0,0,.45)!important;border:3px solid #06140b!important;z-index:9999!important}.whatsapp-float:hover{transform:scale(1.08)}
+/* mobile first / prevent desktop overflow */
+html,body{width:100%;max-width:100%;overflow-x:hidden!important}.container{width:100%;max-width:1280px}.nav-main{overflow-x:auto;white-space:nowrap}.search-box{width:100%}
+@media(max-width:760px){.container{padding-left:15px!important;padding-right:15px!important}.top-bar{position:relative!important}.top-bar-inner{min-height:60px!important;display:block!important}.logo{font-size:24px!important}.logo:before{width:32px;height:32px;margin-right:7px}.nav-main{display:flex!important;width:100%;margin-top:12px;padding-bottom:3px;gap:6px!important}.nav-main a{padding:7px 9px!important;background:#11151a;border-radius:6px}.cat-bar-inner{padding:0!important}.cat-bar a{padding:12px 13px!important}.hero{padding:12px 0 26px!important}.hero-grid{display:block!important}.hero-main-wrap{min-height:0!important}.hero-main{min-height:440px!important;border-radius:12px!important}.hero-main-overlay{padding:20px 17px!important}.hero-main-overlay h1{font-size:30px!important;letter-spacing:-.7px!important}.hero-side{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin-top:9px}.hero-side-card h3{font-size:14px!important}.artigo-header{min-height:430px!important;padding-bottom:28px!important}.artigo-header h1{font-size:36px!important;letter-spacing:-1.1px!important}.article-tools{top:0!important}.article-tools-inner{padding:9px 15px!important;display:block!important}.article-status{margin-bottom:8px}.article-actions{overflow-x:auto;white-space:nowrap}.article-actions button{flex:0 0 auto}.artigo-img-principal{margin:18px 15px 0!important;width:calc(100% - 30px)!important;max-height:330px!important}.artigo-conteudo{padding:10px 18px 45px!important;font-size:17px!important}.article-share-line{margin-bottom:18px!important}.article-reading{margin-left:0!important;width:100%}.footer-grid{grid-template-columns:1fr!important}.whatsapp-float{width:54px!important;height:54px!important;right:14px!important;bottom:14px!important}}
+@media(min-width:761px){.hero-grid{grid-template-columns:1fr 330px!important}.hero-cover{display:block!important;position:relative!important;min-height:480px!important;border-radius:16px!important;overflow:hidden!important}.hero-cover img{width:100%;height:100%;object-fit:cover}.hero-cover-content{position:absolute;inset:0;padding:25px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(transparent 35%,rgba(0,0,0,.95))}.hero-cover-content h3{font-size:25px;line-height:1.1;margin:8px 0 18px}.hero-main-wrap{grid-column:1/2}.hero-side{grid-column:2/3;grid-row:1}.article-tools-inner{min-height:52px}}
+
+</style>
+<style data-photo-policy="1">.photo-source-note{font-size:11px;color:#777;margin:8px 0 18px;text-align:right;letter-spacing:.2px}.artigo-img-principal{display:block;min-height:360px;object-fit:cover}</style>
+<style id="terrabola-redesign-v4">
+:root{--tb-red:#e10600;--tb-red2:#ff3b30;--tb-black:#050607;--tb-panel:#0d1014;--tb-line:#242a31;--tb-white:#fff}
+/* REDESIGN VISÍVEL — edição empresarial 2.0 */
+body{background:#050607!important;color:#f7f7f7!important}
+.tb-v4-strip{background:linear-gradient(90deg,#e10600 0%,#b90000 55%,#760000 100%);color:#fff;padding:10px 15px;text-align:center;font:900 11px/1.3 Arial,sans-serif;letter-spacing:1.4px;text-transform:uppercase;border-bottom:1px solid #ff5a52;position:relative;z-index:1200}
+.tb-v4-strip b{background:#fff;color:#b40000;padding:4px 7px;border-radius:4px;margin-right:7px}
+.top-bar{background:rgba(3,4,5,.96)!important;border-bottom:1px solid #343a42!important;box-shadow:0 10px 35px rgba(0,0,0,.3)!important}
+.logo{font-size:36px!important;text-transform:uppercase!important}
+.logo span{color:#fff!important}
+.nav-main a{font-weight:800!important;text-transform:uppercase;letter-spacing:.4px}
+.cat-bar{background:#0b0d10!important;border-bottom:1px solid #343a42!important}
+.cat-bar a{font-weight:800!important}
+.hero{background:radial-gradient(circle at 80% 0%,rgba(225,6,0,.18),transparent 35%),#050607!important;padding-top:30px!important}
+.hero-main{border:1px solid #343a42!important;box-shadow:0 30px 80px rgba(0,0,0,.55)!important}
+.hero-main-overlay{background:linear-gradient(180deg,transparent 15%,rgba(0,0,0,.25) 38%,rgba(0,0,0,.94) 100%)!important}
+.hero-main-overlay h1{font-weight:950!important;text-shadow:0 3px 18px #000!important}
+.section{background:#050607!important}
+.section-title{font-weight:950!important;letter-spacing:-1px!important}
+.section-title:after{height:4px!important;background:var(--tb-red)!important;width:62px!important}
+.card{background:linear-gradient(180deg,#11151a,#0b0e12)!important;border:1px solid #2a3038!important;border-radius:12px!important;overflow:hidden!important;box-shadow:0 12px 30px rgba(0,0,0,.22)!important}
+.card:hover{transform:translateY(-6px)!important;border-color:#e10600!important;box-shadow:0 18px 45px rgba(225,6,0,.15)!important}
+.card img{height:210px!important;object-fit:cover!important}
+.card h3{font-size:19px!important;line-height:1.22!important}
+.artigo-header{position:relative!important;overflow:hidden!important;background:radial-gradient(circle at 85% 20%,rgba(225,6,0,.22),transparent 34%),linear-gradient(135deg,#090b0e,#15191f)!important;border-bottom:4px solid var(--tb-red)!important}
+.artigo-header:before{content:'TERRABOLA • EDIÇÃO DIGITAL';position:absolute;top:18px;right:24px;color:#fff;background:var(--tb-red);padding:7px 10px;border-radius:5px;font:900 10px Arial,sans-serif;letter-spacing:1px}
+.artigo-header h1{font-weight:950!important;letter-spacing:-1.8px!important;max-width:980px!important;text-shadow:0 4px 22px rgba(0,0,0,.45)!important}
+.article-kicker{font-weight:900!important}
+.article-tools{border-top:1px solid #252b33!important;border-bottom:1px solid #343a42!important}
+.artigo-img-principal{width:100%!important;max-width:1180px!important;min-height:430px!important;max-height:650px!important;border:2px solid #343a42!important;border-radius:18px!important;box-shadow:0 25px 70px rgba(0,0,0,.5)!important}
+.artigo-img-principal + .photo-source-note{display:inline-block!important;background:#0d1014!important;border:1px solid #303740!important;color:#c5cbd2!important;padding:6px 9px!important;border-radius:5px!important;margin-top:9px!important;text-transform:uppercase;font-weight:800!important;font-size:10px!important}
+.artigo-conteudo{background:#090b0e!important;border:1px solid #20262d!important;border-radius:16px!important;padding:30px 34px 55px!important;box-shadow:0 20px 60px rgba(0,0,0,.22)!important}
+.artigo-conteudo p{color:#d9dde2!important}
+.artigo-conteudo h2{font-weight:950!important}
+.tb-image-badge{position:absolute;top:16px;left:16px;z-index:5;background:#e10600;color:#fff;padding:7px 10px;border-radius:5px;font:900 10px Arial,sans-serif;letter-spacing:1px;box-shadow:0 5px 20px rgba(0,0,0,.4)}
+footer{border-top:3px solid var(--tb-red)!important;background:#030405!important}
+.whatsapp-float{box-shadow:0 10px 35px rgba(0,0,0,.45)!important}
+@media(max-width:760px){
+ .tb-v4-strip{font-size:9px;padding:9px 8px}.tb-v4-strip b{padding:3px 5px}
+ .logo{font-size:25px!important}.hero{padding-top:12px!important}
+ .hero-main{min-height:470px!important;border-radius:10px!important}
+ .hero-main-overlay h1{font-size:29px!important}
+ .card img{height:165px!important}
+ .artigo-header{min-height:500px!important}.artigo-header:before{top:12px;right:12px;font-size:8px;padding:6px 7px}.artigo-header h1{font-size:34px!important;padding-top:25px!important}
+ .artigo-img-principal{min-height:250px!important;max-height:350px!important;border-radius:10px!important;margin-left:0!important;margin-right:0!important;width:100%!important}
+ .artigo-conteudo{padding:23px 17px 40px!important;border-radius:10px!important}
+}
+</style>
+</head>
+<body>
+<div class="tb-v4-strip"><b>NOVO</b> TerraBola 2.0 — design empresarial • notícias em destaque • imagens exclusivas por artigo</div>
+
+<div aria-hidden="true" class="reading-progress"></div>
+<!-- MARQUEE TOPO -->
+<div class="marquee-top">
+<span>
+<strong>ÚLTIMA HORA</strong> • Seleção Nacional de Futebol inicia estágio em Maputo • Produção de caju em Nampula sobe 18% em 2025 • Governo anuncia novo programa de irrigação para o Vale do Zambeze • Liga Moçambicana de Futebol confirma calendário 2026/27 • Facto: Moçambique é o 2º maior produtor mundial de caju • Clubes da 1ª Divisão reforçam academias de formação • 
+      <strong>ÚLTIMA HORA</strong> • Seleção Nacional de Futebol inicia estágio em Maputo • Produção de caju em Nampula sobe 18% em 2025 • Governo anuncia novo programa de irrigação para o Vale do Zambeze • Liga Moçambicana de Futebol confirma calendário 2026/27 • Facto: Moçambique é o 2º maior produtor mundial de caju • Clubes da 1ª Divisão reforçam academias de formação •
+    </span>
+</div>
+<!-- TOP BAR -->
+<div class="top-bar">
+<div class="container top-bar-inner">
+<a class="logo" onclick="mostrarPagina('home')">Terra<span>Bola</span></a>
+<nav class="nav-main">
+<a onclick="mostrarPagina('home')">Início</a>
+<a onclick="mostrarPagina('home'); setTimeout(()=&gt;document.getElementById('sec-futebol').scrollIntoView({behavior:'smooth'}),100)">Futebol</a>
+<a onclick="mostrarPagina('home'); setTimeout(()=&gt;document.getElementById('sec-agricultura').scrollIntoView({behavior:'smooth'}),100)">Agricultura</a>
+<a onclick="mostrarPagina('home'); setTimeout(()=&gt;document.getElementById('sec-factos').scrollIntoView({behavior:'smooth'}),100)">Factos Reais</a>
+<a onclick="mostrarPagina('home'); setTimeout(()=&gt;document.getElementById('sec-sobre').scrollIntoView({behavior:'smooth'}),100)">Sobre</a>
+</nav>
+<div class="header-right">
+</div>
+</div>
+<div class="container">
+<div class="search-box">
+<input placeholder="Pesquisar notícias de futebol, agricultura e factos..." type="text"/>
+<button>Pesquisar</button>
+</div>
+</div>
+</div>
+<!-- CATEGORIAS -->
+<div class="cat-bar">
+<div class="container cat-bar-inner">
+<a class="active" id="cat-home" onclick="mostrarPagina('home')">Destaques</a>
+<a onclick="mostrarPagina('home'); setTimeout(()=&gt;document.getElementById('sec-futebol').scrollIntoView({behavior:'smooth'}),100)">Futebol</a>
+<a onclick="mostrarPagina('home'); setTimeout(()=&gt;document.getElementById('sec-agricultura').scrollIntoView({behavior:'smooth'}),100)">Agricultura</a>
+<a onclick="mostrarPagina('home'); setTimeout(()=&gt;document.getElementById('sec-factos').scrollIntoView({behavior:'smooth'}),100)">Factos Reais</a>
+<a onclick="mostrarPagina('futebol-base')">Formação</a>
+<a onclick="mostrarPagina('caju')">Caju &amp; Exportação</a>
+<a onclick="mostrarPagina('irrigacao')">Irrigação</a>
+<a onclick="mostrarPagina('selecao')">Seleção Nacional</a>
+<a onclick="mostrarPagina('economia-rural')">Economia Rural</a>
+</div>
+</div>
+<!-- ===================== PÁGINA HOME ===================== -->
+<div class="page active" id="page-home">
+<section class="hero">
+<div class="container hero-grid">
+<div class="hero-cover">
+<img alt="Campo de futebol" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&amp;q=80"/>
+<div class="hero-cover-content">
+<div>
+<div class="edicao">EDIÇÃO DIGITAL • OUTUBRO 2026</div>
+<h3>Futebol, terra e verdade: o que realmente move Moçambique</h3>
+</div>
+<a class="btn-vermelho" onclick="mostrarPagina('selecao')">Ler edição →</a>
+</div>
+</div>
+<div class="hero-main-wrap">
+<div class="live-marquee">
+<span>● EM DIRECTO ● AO VIVO ● Selecção Nacional — preparação CAN 2027 ● Transmissão em curso ● Actualização permanente ● EM DIRECTO ● AO VIVO ● Selecção Nacional — preparação CAN 2027 ● Transmissão em curso ● Actualização permanente ●</span>
+</div>
+<div class="hero-main">
+<div class="hero-slides" id="heroSlides">
+<img alt="Estádio com luzes" class="active" src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=1200&amp;q=80"/>
+<img alt="Campo de futebol" src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=1200&amp;q=80"/>
+<img alt="Jogadores em ação" src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=1200&amp;q=80"/>
+<img alt="Bola de futebol" src="https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=1200&amp;q=80"/>
+<img alt="Partida noturna" src="https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=1200&amp;q=80"/>
+<img alt="Futebol profissional" src="https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?w=1200&amp;q=80"/>
+<img alt="Jogo em campo" src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=1200&amp;q=80"/>
+<img alt="Estádio e público" src="https://images.unsplash.com/photo-1471295253337-3ceaaedca402?w=1200&amp;q=80"/>
+</div>
+<div class="hero-main-overlay">
+<div class="live-badge"><span class="live-dot"></span> EM DIRECTO</div>
+<span class="badge">Futebol</span>
+<h1>Seleção Nacional prepara CAN 2027 com foco em jogadores formados em academias locais</h1>
+<div class="hero-meta">Redação TerraBola • 8 de Outubro, 2026</div>
+<a class="btn-ler" onclick="mostrarPagina('selecao')">Ler mais</a>
+</div>
+</div>
+<div class="live-marquee">
+<span>● AO VIVO ● Cobertura em directo da preparação da Selecção ● Factos actualizados ● Sinal de vivacidade ● EM DIRECTO ● AO VIVO ● Cobertura em directo da preparação da Selecção ● Factos actualizados ● Sinal de vivacidade ●</span>
+</div>
+</div>
+<div class="hero-side">
+<a class="hero-side-card" onclick="mostrarPagina('caju')">
+<img alt="Plantação de caju" src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&amp;q=80"/>
+<div class="hero-side-overlay">
+<span class="badge">Agricultura</span>
+<h3>Produção de caju em Nampula atinge recorde histórico em 2025</h3>
+</div>
+</a>
+<a class="hero-side-card" onclick="mostrarPagina('factos')">
+<img alt="Campo agrícola" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&amp;q=80"/>
+<div class="hero-side-overlay">
+<span class="badge">Factos Reais</span>
+<h3>Os números que explicam o peso da agricultura na economia nacional</h3>
+</div>
+</a>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="container">
+<h2 class="section-title">Actualidade</h2>
+<div class="cards-grid">
+<a class="card" onclick="mostrarPagina('futebol-base')">
+<img alt="Jovens a jogar futebol" src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Futebol</div>
+<h3>Academias de formação: o novo eixo do futebol moçambicano</h3>
+<div class="card-meta">7 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('irrigacao')">
+<img alt="Sistema de irrigação" src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Agricultura</div>
+<h3>Novo programa de irrigação no Vale do Zambeze: o que muda para os camponeses</h3>
+<div class="card-meta">6 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('economia-rural')">
+<img alt="Mercado agrícola" src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Economia Rural</div>
+<h3>Como o futebol e a agricultura estão a criar emprego no interior do país</h3>
+<div class="card-meta">5 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('factos')">
+<img alt="Campos de cultivo" src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Factos Reais</div>
+<h3>Facto: 70% da população activa ainda depende da agricultura familiar</h3>
+<div class="card-meta">4 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('liga')">
+<img alt="Estádio iluminado" src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Futebol</div>
+<h3>Liga Moçambicana 2026/27: calendário, regras e o que muda esta época</h3>
+<div class="card-meta">3 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('mandioca')">
+<img alt="Cultivo de mandioca" src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Agricultura</div>
+<h3>Mandioca em Moçambique: a cultura que alimenta milhões e ainda é subvalorizada</h3>
+<div class="card-meta">2 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('fairplay')">
+<img alt="Campo de futebol" src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Futebol</div>
+<h3>Fair-play e disciplina: a aposta da FMF para limpar a imagem do campeonato</h3>
+<div class="card-meta">1 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('exportacao')">
+<img alt="Exportação agrícola" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Factos Reais</div>
+<h3>Exportações agrícolas: os números reais de 2025 e o que esperamos em 2026</h3>
+<div class="card-meta">30 de Setembro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('jovens-campo')">
+<img alt="Jovens no campo" src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Agricultura</div>
+<h3>Jovens no campo: por que a agricultura familiar precisa de nova geração</h3>
+<div class="card-meta">28 de Setembro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('liga')">
+<img alt="Infraestruturas desportivas" src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Futebol</div>
+<h3>Campos e estádios: o estado real das infraestruturas e o calendário da liga</h3>
+<div class="card-meta">27 de Setembro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('factos')">
+<img alt="Clima e agricultura" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Factos Reais</div>
+<h3>Alterações climáticas e a agricultura: o que os dados já mostram em Moçambique</h3>
+<div class="card-meta">25 de Setembro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('jovens-campo')">
+<img alt="Mulheres na agricultura" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Agricultura</div>
+<h3>Mulheres e jovens na agricultura: o papel que sustenta a produção alimentar</h3>
+<div class="card-meta">24 de Setembro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('selecao')">
+<img alt="Transferências de jogadores" src="https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Futebol</div>
+<h3>Mercado de transferências e formação: o valor do futebol moçambicano</h3>
+<div class="card-meta">22 de Setembro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('exportacao')">
+<img alt="Segurança alimentar" src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Factos Reais</div>
+<h3>Segurança alimentar e exportações: os números que o país precisa de olhar</h3>
+<div class="card-meta">20 de Setembro, 2026</div>
+</div>
+</a>
+</div>
+</div>
+</section>
+<section class="section" id="sec-futebol">
+<div class="container">
+<div class="section-header">
+<h2 class="section-title">Futebol</h2>
+<a class="ver-todas" onclick="mostrarPagina('selecao')">VER TODAS →</a>
+</div>
+<div class="destaque-grid">
+<a class="destaque-grande" onclick="mostrarPagina('selecao')">
+<img alt="Jogador de futebol" src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1000&amp;q=80"/>
+<div class="destaque-overlay">
+<span class="badge">Seleção Nacional</span>
+<h2>Seleção Nacional prepara CAN 2027 com foco em jogadores formados em academias locais</h2>
+<div class="hero-meta">Redação • 8 de Outubro, 2026</div>
+</div>
+</a>
+<div class="lista-lateral">
+<a class="item-lateral" onclick="mostrarPagina('futebol-base')">
+<img alt="Treino de jovens" src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=300&amp;q=80"/>
+<div>
+<h4>Academias de formação: o novo eixo do futebol moçambicano</h4>
+<div class="card-meta">7 de Outubro, 2026</div>
+</div>
+</a>
+<a class="item-lateral" onclick="mostrarPagina('economia-rural')">
+<img alt="Estádio" src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=300&amp;q=80"/>
+<div>
+<h4>Clubes da 1ª Divisão investem em estruturas no interior</h4>
+<div class="card-meta">5 de Outubro, 2026</div>
+</div>
+</a>
+<a class="item-lateral" onclick="mostrarPagina('liga')">
+<img alt="Público no estádio" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=300&amp;q=80"/>
+<div>
+<h4>Liga Moçambicana confirma calendário e reforça fair-play</h4>
+<div class="card-meta">3 de Outubro, 2026</div>
+</div>
+</a>
+</div>
+</div>
+<!-- 10 POSTES DE FUTEBOL -->
+<h2 class="section-title" style="margin-top:40px;">Mais Futebol</h2>
+<div class="cards-grid">
+<a class="card" onclick="mostrarPagina('selecao')">
+<img alt="Estádio" src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Seleção Nacional</div>
+<h3>Seleção A inicia ciclo de preparação com foco em jovens das academias</h3>
+<div class="card-meta">8 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('futebol-base')">
+<img alt="Campo" src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Formação</div>
+<h3>Academias de Maputo e Beira produzem talentos para a 1ª Divisão</h3>
+<div class="card-meta">7 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('liga')">
+<img alt="Jogadores" src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Liga Nacional</div>
+<h3>Época 2026/27: 14 clubes, 26 jornadas e novas regras de licenciamento</h3>
+<div class="card-meta">3 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('fairplay')">
+<img alt="Bola" src="https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Disciplina</div>
+<h3>Fair-play: sanções mais pesadas para violência no relvado e nas bancadas</h3>
+<div class="card-meta">1 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('futebol-base')">
+<img alt="Treino" src="https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Formação</div>
+<h3>Como as escolas de futebol estão a mudar o perfil do jogador moçambicano</h3>
+<div class="card-meta">29 de Setembro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('selecao')">
+<img alt="Jogo" src="https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Seleção Nacional</div>
+<h3>CAN 2027: o plano da FMF para reduzir a dependência de jogadores no exterior</h3>
+<div class="card-meta">28 de Setembro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('liga')">
+<img alt="Campo de jogo" src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Liga Nacional</div>
+<h3>Clubes do interior pedem calendário estável e apoio logístico</h3>
+<div class="card-meta">26 de Setembro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('economia-rural')">
+<img alt="Estádio e público" src="https://images.unsplash.com/photo-1471295253337-3ceaaedca402?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Futebol &amp; Sociedade</div>
+<h3>Futebol no interior: emprego, coesão social e o papel dos clubes amadores</h3>
+<div class="card-meta">24 de Setembro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('fairplay')">
+<img alt="Estádio à noite" src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Disciplina</div>
+<h3>Árbitros e segurança: o que muda no campeonato para proteger o jogo</h3>
+<div class="card-meta">22 de Setembro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('futebol-base')">
+<img alt="Relva" src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Formação</div>
+<h3>Do campo de terra à 1ª Divisão: o caminho dos jovens talentos moçambicanos</h3>
+<div class="card-meta">20 de Setembro, 2026</div>
+</div>
+</a>
+</div>
+</div>
+</section>
+<section class="section" id="sec-agricultura">
+<div class="container">
+<div class="section-header">
+<h2 class="section-title">Agricultura</h2>
+<a class="ver-todas" onclick="mostrarPagina('caju')">VER TODAS →</a>
+</div>
+<div class="destaque-grid">
+<a class="destaque-grande" onclick="mostrarPagina('caju')">
+<img alt="Cajueiros" src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1000&amp;q=80"/>
+<div class="destaque-overlay">
+<span class="badge">Exportação</span>
+<h2>Produção de caju em Nampula atinge recorde histórico em 2025</h2>
+<div class="hero-meta">Redação • 8 de Outubro, 2026</div>
+</div>
+</a>
+<div class="lista-lateral">
+<a class="item-lateral" onclick="mostrarPagina('irrigacao')">
+<img alt="Irrigação" src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=300&amp;q=80"/>
+<div>
+<h4>Novo programa de irrigação no Vale do Zambeze</h4>
+<div class="card-meta">6 de Outubro, 2026</div>
+</div>
+</a>
+<a class="item-lateral" onclick="mostrarPagina('factos')">
+<img alt="Campos" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=300&amp;q=80"/>
+<div>
+<h4>Agricultura familiar continua a sustentar a maioria das famílias</h4>
+<div class="card-meta">4 de Outubro, 2026</div>
+</div>
+</a>
+<a class="item-lateral" onclick="mostrarPagina('economia-rural')">
+<img alt="Mercado" src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=300&amp;q=80"/>
+<div>
+<h4>Mercados rurais ganham novo dinamismo com melhorias rodoviárias</h4>
+<div class="card-meta">2 de Outubro, 2026</div>
+</div>
+</a>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="sec-factos">
+<div class="container">
+<h2 class="section-title">Factos Reais</h2>
+<div class="cards-grid">
+<a class="card" onclick="mostrarPagina('factos')">
+<img alt="Campos verdes" src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Dados Oficiais</div>
+<h3>Os números que explicam o peso da agricultura na economia nacional</h3>
+<div class="card-meta">4 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('economia-rural')">
+<img alt="Comunidade" src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Sociedade</div>
+<h3>Como o futebol e a agricultura estão a criar emprego no interior</h3>
+<div class="card-meta">5 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('caju')">
+<img alt="Caju" src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Exportação</div>
+<h3>Moçambique mantém posição de destaque no mercado mundial de caju</h3>
+<div class="card-meta">8 de Outubro, 2026</div>
+</div>
+</a>
+<a class="card" onclick="mostrarPagina('irrigacao')">
+<img alt="Água na agricultura" src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&amp;q=80"/>
+<div class="card-body">
+<div class="card-cat">Infraestrutura</div>
+<h3>Investimento em irrigação: o caminho para a segurança alimentar</h3>
+<div class="card-meta">6 de Outubro, 2026</div>
+</div>
+</a>
+</div>
+</div>
+</section>
+<section class="section" id="sec-sobre">
+<div class="container" style="max-width:800px; text-align:center;">
+<h2 class="section-title" style="border:none;">Sobre a Revista TerraBola</h2>
+<p style="font-size:17px; line-height:1.7; color:#aaa;">
+          A Revista TerraBola é uma publicação digital moçambicana dedicada a informar com rigor sobre futebol, agricultura e factos reais. 
+          Valorizamos conteúdo responsável, organizado e de carácter empresarial. 
+          O nosso compromisso é com a verdade dos números, o desenvolvimento do desporto e o potencial do campo.
+        </p>
+</div>
+</section>
+</div>
+<!-- ===================== ARTIGO SELEÇÃO ===================== -->
+<div class="page" id="page-selecao">
+<article>
+<div class="artigo-header">
+<div class="container">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<div class="article-kicker"><span class="live-now"><i></i> AO VIVO</span><span>EDIÇÃO DIGITAL</span><span class="article-updated">ACTUALIZADO AGORA</span></div>
+<div class="artigo-cat">Futebol • Seleção Nacional</div>
+<h1>Seleção Nacional prepara CAN 2027 com foco em jogadores formados em academias locais</h1>
+<div class="artigo-meta">
+<span>Por Redação TerraBola</span>
+<span>8 de Outubro, 2026</span>
+<span>Maputo</span>
+</div>
+</div>
+</div>
+<div class="article-tools"><div class="article-tools-inner"><div class="article-status"><span class="status-dot"></span><strong>ACTUALIZAÇÃO</strong><span class="article-stat">Conteúdo editorial recente</span></div><div class="article-actions"><button onclick="partilharArtigo('whatsapp')" type="button">WhatsApp</button><button onclick="partilharArtigo('facebook')" type="button">Facebook</button><button onclick="copiarLinkArtigo()" type="button">Copiar link</button></div></div></div>
+<div class="container">
+<div class="tb-image-badge">IMAGEM EXCLUSIVA</div><img alt="Estádio de futebol com público" class="artigo-img-principal" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1600&amp;q=88"/><div class="photo-source-note">Fotografia editorial real • imagem de stock • não gerada por IA</div>
+</div>
+<div class="artigo-conteudo">
+<p>A Federação Moçambicana de Futebol (FMF) confirmou esta semana o plano de preparação da Seleção Nacional para o Campeonato Africano das Nações de 2027. O programa tem como eixo central a valorização de jogadores formados nas academias e escolas de futebol existentes no país, especialmente nas províncias de Maputo, Sofala, Nampula e Gaza.</p>
+<p>Segundo o comunicado oficial, o objectivo é reduzir a dependência excessiva de jogadores que actuam no estrangeiro e criar uma base sólida de atletas que conheçam a realidade do futebol nacional. A decisão surge após uma análise interna dos últimos ciclos de qualificação, em que a falta de continuidade e a fraca ligação entre os clubes locais e a selecção foram identificadas como pontos fracos.</p>
+<h2>Academias no centro da estratégia</h2>
+<p>Nos últimos cinco anos, várias academias privadas e projectos de formação ligados a clubes da Liga Moçambicana de Futebol têm produzido talentos que começam a chamar a atenção. A Academia de Futebol de Maputo, o projecto de formação do Ferroviário de Maputo, a escola do Costa do Sol e iniciativas em Beira e Nampula estão a ser monitorizadas de perto pela comissão técnica nacional.</p>
+<p>O seleccionador nacional, em declaração à imprensa, sublinhou que “o futuro do futebol moçambicano passa por identificar e desenvolver talentos dentro do nosso território. Não podemos continuar a esperar que o talento surja apenas no exterior. Temos de criar condições para que os jovens moçambicanos cresçam aqui, com acompanhamento técnico e táctico de qualidade”.</p>
+<p>O plano inclui estágios regulares de observação, jogos de preparação contra equipas de clubes da 1ª Divisão e a criação de um quadro de jovens sub-23 que servirá de ponte para a selecção A. A primeira fase deste trabalho já começou em Maputo, com um estágio de 12 dias que reuniu 28 jogadores, dos quais 18 actuam em clubes nacionais.</p>
+<h2>Infraestruturas e calendário</h2>
+<p>Um dos maiores obstáculos apontados pelos técnicos é a qualidade irregular dos relvados e a falta de campos de treino com condições adequadas fora da capital. A FMF está a negociar com as autoridades locais e com parceiros privados a reabilitação de campos em várias cidades. Em paralelo, a Liga Moçambicana de Futebol confirmou o calendário da época 2026/27, com o objectivo de garantir mais estabilidade e menos interrupções provocadas por competições continentais ou por problemas logísticos.</p>
+<p>A organização do campeonato nacional tem sido criticada em anos anteriores pela falta de previsibilidade. Este ano, a direcção da liga promete cumprir rigorosamente as datas e reforçar as regras de fair-play e de formação de jovens. Cada clube da 1ª Divisão terá de apresentar, até ao final da época, um relatório sobre o número de jogadores formados na própria academia que integraram o plantel principal.</p>
+<h2>Impacto económico e social</h2>
+<p>O futebol em Moçambique não é apenas desporto. Em muitas comunidades do interior, o jogo é um dos poucos espaços de socialização e de aspiração para os jovens. A aposta em academias locais pode ter efeitos positivos na retenção de talento e na criação de emprego indirecto — treinadores, preparadores físicos, gestores de equipamento e pessoal de apoio.</p>
+<p>Estudos recentes de organizações desportivas africanas mostram que países que investiram de forma consistente na formação de base conseguiram melhorar os resultados da selecção nacional e, ao mesmo tempo, aumentar o valor de transferência dos seus jogadores. Moçambique ainda está longe desses números, mas o caminho agora traçado é claro: investir no que se produz cá dentro.</p>
+<p>A comissão técnica também pretende estabelecer parcerias com federações de países da região para organizar torneios de jovens e partilhar metodologias de treino. A ideia é que os melhores atletas das academias moçambicanas tenham contacto regular com outros sistemas de formação africanos, sem perder a ligação aos seus clubes de origem.</p>
+<h2>Desafios ainda por resolver</h2>
+<p>Apesar do optimismo, vários problemas estruturais permanecem. A falta de nutricionistas e de acompanhamento médico especializado em muitos clubes, a ausência de contratos claros para jovens atletas e a pressão para resultados imediatos continuam a dificultar o trabalho de formação. Alguns treinadores de academias relatam que jogadores promissores abandonam o desporto por falta de apoio familiar ou por necessidade de contribuir para o rendimento do agregado.</p>
+<p>A FMF reconhece estas dificuldades e afirma que está a trabalhar num programa de apoio social para jovens em formação, em colaboração com o Ministério da Juventude e Desporto. O programa ainda não tem data de lançamento, mas a expectativa é que possa começar a funcionar no primeiro semestre de 2027.</p>
+<p>Outro ponto sensível é a gestão de expectativas. A CAN 2027 será disputada em casa por um dos países da região, o que aumenta a pressão sobre a selecção. O público espera resultados, mas a construção de uma equipa competitiva com base local leva tempo. O seleccionador pediu paciência e consistência: “Não se constrói uma selecção forte em seis meses. É um trabalho de anos. O que estamos a fazer agora é plantar a semente”.</p>
+<h2>Próximos passos</h2>
+<p>Nos próximos meses, a selecção realizará dois jogos de preparação e um estágio de observação em Nampula. A lista de convocados será anunciada com 15 dias de antecedência. A FMF também prometeu maior transparência na comunicação com os adeptos, com relatórios periódicos sobre o estado da preparação e sobre o trabalho das academias.</p>
+<p>Para a Revista TerraBola, este momento representa uma oportunidade rara de alinhar o discurso oficial com a prática. Se a aposta nas academias for mantida de forma séria e se os clubes forem realmente incentivados a formar jogadores, o futebol moçambicano poderá dar um salto qualitativo nos próximos cinco a dez anos. Caso contrário, voltaremos a assistir ao ciclo de expectativas altas seguidas de desilusões.</p>
+<p>O futebol em Moçambique tem talento. O que tem faltado é continuidade, estrutura e uma visão de longo prazo. A preparação para a CAN 2027 pode ser o ponto de viragem — ou apenas mais um ciclo de promessas. O tempo e os resultados no terreno dirão qual dos dois caminhos será seguido.</p>
+</div>
+</article>
+</div>
+<!-- ===================== ARTIGO CAJU ===================== -->
+<div class="page" id="page-caju">
+<article>
+<div class="artigo-header">
+<div class="container">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<div class="article-kicker"><span class="live-now"><i></i> AO VIVO</span><span>EDIÇÃO DIGITAL</span><span class="article-updated">ACTUALIZADO AGORA</span></div>
+<div class="artigo-cat">Agricultura • Exportação</div>
+<h1>Produção de caju em Nampula atinge recorde histórico em 2025</h1>
+<div class="artigo-meta">
+<span>Por Redação TerraBola</span>
+<span>8 de Outubro, 2026</span>
+<span>Nampula</span>
+</div>
+</div>
+</div>
+<div class="article-tools"><div class="article-tools-inner"><div class="article-status"><span class="status-dot"></span><strong>ACTUALIZAÇÃO</strong><span class="article-stat">Conteúdo editorial recente</span></div><div class="article-actions"><button onclick="partilharArtigo('whatsapp')" type="button">WhatsApp</button><button onclick="partilharArtigo('facebook')" type="button">Facebook</button><button onclick="copiarLinkArtigo()" type="button">Copiar link</button></div></div></div>
+<div class="container">
+<div class="tb-image-badge">IMAGEM EXCLUSIVA</div><img alt="Plantação de cajueiros" class="artigo-img-principal" src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1600&amp;q=88"/><div class="photo-source-note">Fotografia editorial real • imagem de stock • não gerada por IA</div>
+</div>
+<div class="artigo-conteudo">
+<p>A província de Nampula consolidou a sua posição como principal polo de produção de caju em Moçambique. Dados oficiais divulgados pelo Ministério da Agricultura e Desenvolvimento Rural e pela Associação de Produtores de Caju apontam para um aumento de 18% na produção comercializada em 2025 face ao ano anterior, estabelecendo um novo recorde histórico.</p>
+<p>O volume total de castanha de caju comercializada na campanha 2025 ultrapassou as 180 mil toneladas a nível nacional, com Nampula a contribuir com mais de 60% desse total. O crescimento é atribuído a uma combinação de factores: condições climáticas favoráveis em grande parte da campanha, maior adesão dos produtores às práticas de gestão de pragas e o alargamento das áreas de plantação renovada.</p>
+<h2>O peso económico do caju</h2>
+<p>O caju continua a ser um dos principais produtos de exportação agrícola de Moçambique. Nos últimos anos, o país tem mantido a posição de segundo maior produtor mundial de castanha de caju em bruto, atrás apenas da Costa do Marfim. A maior parte da produção continua a ser exportada em bruto, sobretudo para o Vietname e a Índia, onde é processada e reexportada para os mercados de consumo final.</p>
+<p>Este modelo gera receitas importantes em divisas, mas limita o valor acrescentado que fica no país. Várias fábricas de processamento instaladas em Nampula, Gaza e Maputo operam abaixo da capacidade instalada, em parte devido a dificuldades de financiamento, custos energéticos e irregularidade no fornecimento de matéria-prima de qualidade.</p>
+<p>Os produtores familiares, que representam a esmagadora maioria dos produtores de caju, beneficiam directamente do aumento de preços no mercado internacional. Em 2025, o preço médio pago ao produtor manteve-se em níveis relativamente elevados, o que permitiu a muitas famílias rurais melhorar o rendimento e investir em educação e habitação.</p>
+<h2>Desafios estruturais</h2>
+<p>Apesar do recorde, os especialistas alertam para a fragilidade do sector. A idade avançada de muitos cajueiros, a baixa densidade de plantação em várias zonas e a vulnerabilidade a pragas como o oídio e a lagarta do caju continuam a ser problemas estruturais. Programas de renovação de plantações têm avançado, mas a ritmo inferior ao necessário para garantir a sustentabilidade a médio prazo.</p>
+<p>A extensão rural e o acesso a insumos de qualidade — fungicidas, ferramentas e conhecimento técnico — ainda não chegam a todos os produtores de forma regular. Em distritos mais remotos de Nampula e Cabo Delgado, muitos camponeses continuam a depender de práticas tradicionais e de informação transmitida oralmente.</p>
+<p>Outro ponto crítico é a logística. O transporte da castanha desde as zonas de produção até aos centros de comercialização e aos portos enfrenta estradas em mau estado e custos elevados. Em algumas zonas, os intermediários continuam a ter um papel dominante, o que reduz a margem dos produtores e dificulta a transparência dos preços.</p>
+<h2>Processamento local e industrialização</h2>
+<p>O Governo e vários parceiros de desenvolvimento têm insistido na necessidade de aumentar o processamento local. A meta anunciada em documentos oficiais é processar pelo menos 30% da produção nacional até 2030. Actualmente, esse percentual situa-se bastante abaixo desse valor.</p>
+<p>As fábricas existentes enfrentam desafios de competitividade face às unidades asiáticas, que operam com custos laborais mais baixos e com cadeias de abastecimento mais estáveis. No entanto, o processamento local cria emprego directo e indireto e permite reter mais valor na economia nacional. Em Nampula, algumas unidades de descasque e embalagem já empregam centenas de trabalhadores, a maioria mulheres.</p>
+<p>Investidores privados e cooperativas de produtores têm mostrado interesse em expandir a capacidade de processamento, mas pedem maior previsibilidade fiscal, acesso a crédito a taxas competitivas e melhoria das infraestruturas energéticas e rodoviárias.</p>
+<h2>Impacto nas comunidades</h2>
+<p>Nas zonas rurais de Nampula, o caju não é apenas uma cultura de rendimento. É parte da identidade económica e social de muitas comunidades. A campanha de comercialização mobiliza famílias inteiras, cria oportunidades sazonais de trabalho e injeta liquidez nas economias locais.</p>
+<p>Quando a produção sobe e os preços se mantêm firmes, o efeito multiplica-se: mais crianças vão à escola, mais famílias investem em pequenas melhorias habitacionais e o comércio local regista maior movimento. Quando a produção cai ou os preços baixam, o impacto é imediato e sentido em toda a cadeia.</p>
+<p>Organizações de apoio ao desenvolvimento rural têm trabalhado com associações de produtores para melhorar a organização da comercialização e reduzir a dependência de intermediários. Algumas associações já conseguem negociar directamente com compradores de maior dimensão, o que se traduz em melhores preços médios para os seus membros.</p>
+<h2>Perspectivas para 2026 e além</h2>
+<p>As perspectivas para a campanha de 2026 são cautelosamente positivas. As condições climáticas no início da época foram razoáveis na maior parte das zonas produtoras, mas a incerteza ligada a fenómenos climáticos extremos continua a ser um factor de risco. A renovação de plantações e o fortalecimento dos serviços de extensão serão determinantes para consolidar os ganhos dos últimos anos.</p>
+<p>A nível de política pública, a expectativa é que o sector continue a receber atenção prioritária, tanto pelo seu peso nas exportações como pelo seu papel na redução da pobreza rural. A articulação entre o Ministério da Agricultura, as autoridades provinciais, as associações de produtores e o sector privado será fundamental.</p>
+<p>Para a Revista TerraBola, o recorde de 2025 é uma boa notícia, mas não pode ser motivo de complacência. O caju moçambicano tem potencial para gerar muito mais valor do que actualmente gera. Isso exige investimento em renovação de plantações, em processamento local, em logística e em organização dos produtores. Sem esses passos, o país continuará a exportar a matéria-prima e a importar o produto acabado — um modelo que limita o desenvolvimento rural e a criação de emprego de qualidade.</p>
+<p>Nampula mostrou que é possível produzir mais e melhor. Agora o desafio é transformar esse volume em riqueza sustentada para as famílias que, ano após ano, cuidam dos cajueiros e alimentam uma das cadeias agrícolas mais importantes do país.</p>
+</div>
+</article>
+</div>
+<!-- ===================== ARTIGO IRRIGAÇÃO ===================== -->
+<div class="page" id="page-irrigacao">
+<article>
+<div class="artigo-header">
+<div class="container">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<div class="article-kicker"><span class="live-now"><i></i> AO VIVO</span><span>EDIÇÃO DIGITAL</span><span class="article-updated">ACTUALIZADO AGORA</span></div>
+<div class="artigo-cat">Agricultura • Infraestrutura</div>
+<h1>Novo programa de irrigação no Vale do Zambeze: o que muda para os camponeses</h1>
+<div class="artigo-meta">
+<span>Por Redação TerraBola</span>
+<span>6 de Outubro, 2026</span>
+<span>Tete / Zambeze</span>
+</div>
+</div>
+</div>
+<div class="article-tools"><div class="article-tools-inner"><div class="article-status"><span class="status-dot"></span><strong>ACTUALIZAÇÃO</strong><span class="article-stat">Conteúdo editorial recente</span></div><div class="article-actions"><button onclick="partilharArtigo('whatsapp')" type="button">WhatsApp</button><button onclick="partilharArtigo('facebook')" type="button">Facebook</button><button onclick="copiarLinkArtigo()" type="button">Copiar link</button></div></div></div>
+<div class="container">
+<div class="tb-image-badge">IMAGEM EXCLUSIVA</div><img alt="Sistema de irrigação em campo agrícola" class="artigo-img-principal" src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1600&amp;q=88"/><div class="photo-source-note">Fotografia editorial real • imagem de stock • não gerada por IA</div>
+</div>
+<div class="artigo-conteudo">
+<p>O Governo de Moçambique lançou oficialmente um novo programa de expansão da irrigação no Vale do Zambeze, com o objectivo de aumentar a produtividade agrícola, reduzir a dependência da chuva e reforçar a segurança alimentar nas províncias de Tete, Sofala, Zambézia e Manica. O programa prevê a reabilitação de esquemas de irrigação existentes e a construção de novos sistemas de pequena e média escala.</p>
+<p>Segundo dados do Ministério da Agricultura e Desenvolvimento Rural, apenas uma pequena percentagem das terras cultiváveis do país está actualmente sob irrigação. A grande maioria dos produtores continua a depender exclusivamente das chuvas, o que torna a produção altamente vulnerável a períodos de seca ou a irregularidades climáticas cada vez mais frequentes.</p>
+<h2>Objectivos e alcance do programa</h2>
+<p>O programa tem como meta principal colocar sob irrigação dezenas de milhares de hectares adicionais nos próximos cinco anos. A prioridade serão as zonas com potencial hídrico já identificado e com organização de produtores capaz de gerir os sistemas após a construção. A abordagem combina investimentos públicos com parcerias com associações de camponeses e, em alguns casos, com operadores privados.</p>
+<p>Além da construção de canais, bombas e estruturas de armazenamento, o programa inclui componentes de formação técnica, apoio à organização de associações de utentes de água e introdução de práticas de gestão eficiente dos recursos hídricos. A ideia é que os sistemas não sejam apenas construídos, mas efectivamente utilizados e mantidos pelas comunidades ao longo do tempo.</p>
+<p>Em declarações oficiais, o ministro da tutela sublinhou que “a irrigação não é um luxo, é uma necessidade estratégica para a segurança alimentar e para o desenvolvimento rural. Sem água controlada, a produtividade continua baixa e os produtores ficam à mercê do clima”.</p>
+<h2>Impacto esperado na produção</h2>
+<p>Estudos de casos em esquemas de irrigação já existentes no país mostram que a produtividade por hectare pode aumentar significativamente quando a água é gerida de forma adequada. Culturas como milho, arroz, hortícolas e, em algumas zonas, cana-de-açúcar e frutas registam ganhos importantes em rendimento e em estabilidade de produção ao longo do ano.</p>
+<p>Para os produtores familiares, a irrigação permite não só aumentar a produção para consumo próprio, mas também gerar excedentes comercializáveis. Isso traduz-se em maior rendimento monetário, maior capacidade de investir em insumos e, em muitos casos, na possibilidade de praticar duas ou até três campanhas por ano, em vez de depender de uma única estação chuvosa.</p>
+<p>No Vale do Zambeze, o potencial é particularmente elevado devido à disponibilidade de água do rio e de afluentes. No entanto, a gestão da água tem de ser feita com cuidado para evitar conflitos entre utilizadores a montante e a jusante, e para não comprometer os ecossistemas ribeirinhos.</p>
+<h2>Desafios de implementação</h2>
+<p>Programas de irrigação anteriores em Moçambique enfrentaram dificuldades de sustentabilidade. Em vários casos, as infraestruturas foram construídas, mas a manutenção não foi assegurada, as bombas avariaram e os canais ficaram obstruídos. A falta de organização dos utilizadores e a ausência de mecanismos claros de cobrança e gestão das taxas de água foram factores críticos.</p>
+<p>O novo programa tenta aprender com essas experiências. A ênfase na formação de associações de utentes e no estabelecimento de regras claras de gestão é um passo positivo. Ainda assim, o sucesso dependerá da capacidade real de acompanhar as comunidades após a inauguração das obras e de garantir que os fundos de manutenção existem e são utilizados de forma transparente.</p>
+<p>Outro desafio é o acesso a energia para bombagem. Em zonas sem rede eléctrica fiável, a dependência de combustível ou de soluções solares torna-se crítica. O programa prevê o uso de sistemas de bombagem solar em alguns esquemas de pequena escala, o que pode reduzir os custos operacionais a longo prazo.</p>
+<h2>Dimensão social e de género</h2>
+<p>A irrigação tem impactos diferenciados consoante o género e a posição social dos produtores. Em muitas comunidades, as mulheres são responsáveis por grande parte do trabalho agrícola, mas têm menos acesso a terra, a crédito e a processos de decisão. O desenho do programa inclui medidas para garantir a participação de mulheres nas associações de utentes e no acesso aos benefícios da irrigação.</p>
+<p>Além disso, a estabilização da produção pode reduzir a pressão migratória de jovens para as cidades, ao criar oportunidades de rendimento no meio rural. Em zonas onde a agricultura de sequeiro é altamente arriscada, a irrigação pode ser um factor de retenção de população activa e de dinamização das economias locais.</p>
+<h2>Articulação com outras políticas</h2>
+<p>O programa de irrigação não pode ser visto isoladamente. O seu sucesso depende de estradas que permitam escoar a produção, de mercados que absorvam os excedentes, de serviços de extensão que apoiem os produtores e de um ambiente de preços e crédito que torne o investimento rentável. Sem essa articulação, o risco é produzir mais sem conseguir vender ou sem conseguir cobrir os custos de produção.</p>
+<p>A ligação com a política de comercialização de produtos agrícolas e com os programas de segurança alimentar será, por isso, fundamental. Em anos de boa produção irrigada, o país pode reduzir a necessidade de importação de alimentos básicos e reforçar as reservas estratégicas.</p>
+<h2>Perspectivas</h2>
+<p>O lançamento do programa no Vale do Zambeze representa um passo importante na direcção certa. A disponibilidade de água e o potencial produtivo da região justificam o investimento. No entanto, a história da irrigação em Moçambique ensina que a construção de infraestruturas é apenas o início. A gestão, a manutenção e a organização social à volta da água são o que determina se o investimento se traduz em benefícios duradouros para os camponeses.</p>
+<p>Para a Revista TerraBola, o acompanhamento deste programa será prioritário. Não basta anunciar hectares irrigados. É preciso verificar se os sistemas funcionam dois, três e cinco anos depois, se os produtores conseguem pagar a manutenção, se a produtividade realmente sobe e se os benefícios chegam às famílias que trabalham a terra. Só assim a irrigação deixará de ser uma promessa e passará a ser uma realidade concreta no campo moçambicano.</p>
+</div>
+</article>
+</div>
+<!-- ===================== ARTIGO FUTEBOL BASE ===================== -->
+<div class="page" id="page-futebol-base">
+<article>
+<div class="artigo-header">
+<div class="container">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<div class="article-kicker"><span class="live-now"><i></i> AO VIVO</span><span>EDIÇÃO DIGITAL</span><span class="article-updated">ACTUALIZADO AGORA</span></div>
+<div class="artigo-cat">Futebol • Formação</div>
+<h1>Academias de formação: o novo eixo do futebol moçambicano</h1>
+<div class="artigo-meta">
+<span>Por Redação TerraBola</span>
+<span>7 de Outubro, 2026</span>
+<span>Maputo</span>
+</div>
+</div>
+</div>
+<div class="article-tools"><div class="article-tools-inner"><div class="article-status"><span class="status-dot"></span><strong>ACTUALIZAÇÃO</strong><span class="article-stat">Conteúdo editorial recente</span></div><div class="article-actions"><button onclick="partilharArtigo('whatsapp')" type="button">WhatsApp</button><button onclick="partilharArtigo('facebook')" type="button">Facebook</button><button onclick="copiarLinkArtigo()" type="button">Copiar link</button></div></div></div>
+<div class="container">
+<div class="tb-image-badge">IMAGEM EXCLUSIVA</div><img alt="Jovens a jogar futebol num campo" class="artigo-img-principal" src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=1600&amp;q=88"/><div class="photo-source-note">Fotografia editorial real • imagem de stock • não gerada por IA</div>
+</div>
+<div class="artigo-conteudo">
+<p>O futebol moçambicano está a viver uma mudança silenciosa mas significativa. Enquanto os holofotes se concentram nos resultados da selecção e no campeonato nacional, um trabalho de base começa a ganhar corpo nas academias e escolas de formação espalhadas pelo país. De Maputo a Nampula, de Beira a Xai-Xai, projectos de formação de jovens estão a produzir atletas com melhor preparação técnica, táctica e física do que as gerações anteriores.</p>
+<p>Esta evolução não é acidental. Resulta de um conjunto de iniciativas privadas, de clubes da 1ª Divisão que reforçaram os seus departamentos de formação e de programas apoiados por organizações desportivas internacionais. O objectivo comum é claro: deixar de depender quase exclusivamente do talento natural e começar a formar jogadores de forma sistemática.</p>
+<h2>O panorama actual das academias</h2>
+<p>Em Maputo, várias academias operam com estruturas relativamente organizadas. Algumas estão ligadas a clubes históricos, outras são projectos independentes que funcionam como centros de formação e, em alguns casos, como prestadores de serviços a clubes que ainda não têm capacidade própria. Em Sofala, a tradição futebolística da Beira continua a alimentar escolas de formação que abastecem os clubes locais e, ocasionalmente, a selecção de escalões jovens.</p>
+<p>No norte do país, Nampula e Cabo Delgado têm visto surgir projectos mais recentes, muitos deles com forte componente social. Nestes casos, o futebol é utilizado também como ferramenta de inclusão e de ocupação de tempos livres, o que não impede que alguns jovens se destaquem e sigam a via profissional.</p>
+<p>O número exacto de academias registadas e a qualidade do trabalho realizado variam bastante. Não existe ainda um sistema nacional de certificação ou de avaliação padronizada das escolas de formação. Isso torna difícil comparar resultados e garantir padrões mínimos de qualidade técnica, médica e educativa.</p>
+<h2>Metodologia e acompanhamento</h2>
+<p>As melhores academias adoptaram metodologias de treino mais modernas, com ênfase no desenvolvimento individual, na tomada de decisão e no jogo posicional. Os treinos deixaram de ser apenas “jogar à bola” e passaram a incluir sessões específicas de técnica, de força, de velocidade e de análise de jogo. Alguns projectos já utilizam vídeo e dados básicos de desempenho para acompanhar a evolução dos atletas.</p>
+<p>O acompanhamento escolar também ganhou importância. Várias academias exigem que os jovens mantenham o aproveitamento escolar como condição para continuar no projecto. Esta abordagem reduz o risco de abandono precoce dos estudos e prepara os atletas para uma eventual carreira fora do futebol, caso o sonho profissional não se concretize.</p>
+<p>Ainda assim, a maioria das academias opera com recursos limitados. A falta de campos com relvado de qualidade, a escassez de material e a dificuldade em pagar treinadores qualificados são problemas recorrentes. Muitos treinadores de formação trabalham por vocação e com remunerações simbólicas, o que dificulta a profissionalização do sector.</p>
+<h2>Ligação aos clubes profissionais</h2>
+<p>Um dos elos mais fracos da cadeia continua a ser a transição dos jovens das academias para os plantéis profissionais. Muitos clubes da Liga Moçambicana ainda preferem contratar jogadores já formados ou com experiência, em vez de apostar de forma consistente nos produtos das suas próprias escolas ou de academias parceiras.</p>
+<p>Quando a transição acontece, nem sempre é bem gerida. Jovens de 17 ou 18 anos são lançados no plantel principal sem o acompanhamento psicológico e táctico necessário, o que pode resultar em frustração e abandono precoce. Algumas academias tentam colmatar esta lacuna através de acordos com clubes da 2ª e 3ª divisões, onde os jovens podem ganhar minutos e maturidade competitiva.</p>
+<p>A Federação Moçambicana de Futebol tem insistido na necessidade de os clubes da 1ª Divisão cumprirem quotas de jogadores formados localmente. A medida, se for aplicada com rigor e acompanhada de incentivos, pode acelerar a valorização do trabalho de base.</p>
+<h2>Impacto social e económico</h2>
+<p>Para muitas famílias, a academia de futebol representa uma oportunidade concreta de progresso social. Os jovens ganham disciplina, hábitos de trabalho e, em alguns casos, a possibilidade de uma carreira profissional que pode transformar a realidade económica do agregado. Mesmo quando o futebol profissional não se concretiza, as competências adquiridas — trabalho em equipa, resiliência, gestão do tempo — têm valor no mercado de trabalho.</p>
+<p>Em zonas urbanas periféricas e em distritos do interior, as academias funcionam também como espaços de protecção social. Mantêm os jovens ocupados, reduzem a exposição a comportamentos de risco e criam redes de apoio entre famílias e treinadores. Este papel social é muitas vezes subestimado nas discussões sobre o desenvolvimento do futebol.</p>
+<h2>O que falta para consolidar o eixo de formação</h2>
+<p>Para que as academias se tornem verdadeiramente o eixo do futebol moçambicano, são necessários vários passos. Em primeiro lugar, um quadro regulatório claro que defina padrões mínimos de qualidade, direitos dos jovens atletas e obrigações dos clubes e escolas. Em segundo lugar, investimento em infraestruturas de formação — campos, ginásios, salas de estudo. Em terceiro lugar, formação contínua de treinadores de base, com conteúdos actualizados e reconhecimento profissional.</p>
+<p>É também essencial criar mecanismos de financiamento sustentáveis. As mensalidades pagas pelas famílias não chegam para cobrir os custos de um trabalho de qualidade. Parcerias com empresas, fundos públicos de desporto e receitas dos clubes profissionais terão de ser mobilizadas de forma mais estruturada.</p>
+<p>Por fim, a valorização social do trabalho de formação é decisiva. Enquanto o foco mediático e político se concentrar apenas nos resultados da selecção A e nos jogos da 1ª Divisão, o trabalho de base continuará a ser visto como secundário. A mudança de mentalidade — reconhecer que sem formação não há futuro — é tão importante quanto o investimento material.</p>
+<h2>Conclusão</h2>
+<p>As academias de formação estão a tornar-se, de forma gradual, o novo eixo do futebol moçambicano. O talento existe. A vontade de muitos treinadores e dirigentes de base também. O que falta é escala, consistência e um sistema que ligue de forma eficaz o trabalho das escolas ao futebol profissional e à selecção nacional.</p>
+<p>Se esse sistema for construído com rigor e visão de longo prazo, o futebol moçambicano poderá deixar de viver de ciclos de esperança e desilusão e passar a assentar numa base sólida de jogadores formados cá dentro. Para a Revista TerraBola, esse é o caminho mais responsável e mais sustentável.</p>
+</div>
+</article>
+</div>
+<!-- ===================== ARTIGO FACTOS ===================== -->
+<div class="page" id="page-factos">
+<article>
+<div class="artigo-header">
+<div class="container">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<div class="article-kicker"><span class="live-now"><i></i> AO VIVO</span><span>EDIÇÃO DIGITAL</span><span class="article-updated">ACTUALIZADO AGORA</span></div>
+<div class="artigo-cat">Factos Reais • Economia</div>
+<h1>Os números que explicam o peso da agricultura na economia nacional</h1>
+<div class="artigo-meta">
+<span>Por Redação TerraBola</span>
+<span>4 de Outubro, 2026</span>
+<span>Maputo</span>
+</div>
+</div>
+</div>
+<div class="article-tools"><div class="article-tools-inner"><div class="article-status"><span class="status-dot"></span><strong>ACTUALIZAÇÃO</strong><span class="article-stat">Conteúdo editorial recente</span></div><div class="article-actions"><button onclick="partilharArtigo('whatsapp')" type="button">WhatsApp</button><button onclick="partilharArtigo('facebook')" type="button">Facebook</button><button onclick="copiarLinkArtigo()" type="button">Copiar link</button></div></div></div>
+<div class="container">
+<div class="tb-image-badge">IMAGEM EXCLUSIVA</div><img alt="Campos agrícolas extensos" class="artigo-img-principal" src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1600&amp;q=88"/><div class="photo-source-note">Fotografia editorial real • imagem de stock • não gerada por IA</div>
+</div>
+<div class="artigo-conteudo">
+<p>A agricultura continua a ser o sector que mais emprega e que mais influencia a vida da maioria das famílias moçambicanas. Apesar do crescimento de outros sectores — extractivo, serviços, comércio e construção — os números oficiais e os dados de instituições internacionais confirmam que o campo permanece o alicerce social e económico do país.</p>
+<p>Este artigo reúne factos e dados consolidados que ajudam a compreender a dimensão real da agricultura em Moçambique, longe de discursos genéricos e de expectativas inflacionadas.</p>
+<h2>Emprego e população activa</h2>
+<p>Segundo dados do Instituto Nacional de Estatística e de relatórios do Banco Mundial e da FAO, cerca de 70% da população activa moçambicana continua ligada, directa ou indirectamente, à agricultura. A esmagadora maioria destes trabalhadores opera no sector familiar, em explorações de pequena escala, muitas vezes com baixos níveis de produtividade e de acesso a mercados.</p>
+<p>Esta percentagem significa que qualquer choque que afecte a produção agrícola — seca, cheias, pragas ou queda de preços — tem consequências imediatas no rendimento de milhões de pessoas. Ao contrário de economias mais industrializadas, onde o sector primário emprega uma minoria, em Moçambique a agricultura é, para a maioria, a principal ou a única fonte de subsistência.</p>
+<h2>Contribuição para o PIB</h2>
+<p>Em termos de Produto Interno Bruto, a agricultura (incluindo pecuária, silvicultura e pesca) representa uma fatia significativa, embora inferior à do emprego. Dependendo do ano e da metodologia, a contribuição situa-se tipicamente entre 20% e 25% do PIB. O sector extractivo e os serviços têm ganhado peso, mas a agricultura mantém uma importância estrutural que os números agregados por vezes subestimam.</p>
+<p>É importante distinguir entre o valor monetário gerado e o valor social. Muita da produção agrícola familiar não entra nos circuitos comerciais formais e, por isso, é apenas parcialmente captada pelas estatísticas oficiais. O autoconsumo e as trocas locais representam uma parte relevante do bem-estar das famílias rurais que não aparece de forma plena nas contas nacionais.</p>
+<h2>Principais culturas e exportações</h2>
+<p>As culturas de rendimento mais relevantes para as exportações agrícolas incluem o caju, o tabaco, o açúcar, o algodão e, em menor escala, o gergelim e outras oleaginosas. O caju, em particular, tem mantido Moçambique entre os principais produtores mundiais de castanha em bruto.</p>
+<p>As culturas alimentares básicas — milho, mandioca, mapira, arroz e feijão — dominam a produção destinada ao consumo interno. A produtividade por hectare nestas culturas permanece, em geral, baixa quando comparada com médias regionais e internacionais, o que limita tanto a segurança alimentar como a capacidade de gerar excedentes comercializáveis.</p>
+<p>A dependência de importações de alimentos em anos de má produção interna continua a ser um factor de vulnerabilidade. O arroz e o trigo, por exemplo, têm uma componente importada significativa, o que expõe o país a flutuações de preços internacionais e a pressões sobre as reservas de divisas.</p>
+<h2>Produtividade e tecnologias</h2>
+<p>Um dos factos mais consistentes nos relatórios técnicos é a baixa produtividade média da agricultura familiar. O uso limitado de sementes melhoradas, de fertilizantes, de irrigação e de mecanização explica grande parte deste desempenho. A extensão rural, embora exista, não chega de forma regular e eficaz a todos os produtores.</p>
+<p>Onde existem esquemas de irrigação funcionais, programas de extensão bem estruturados e acesso a mercados, os ganhos de produtividade são evidentes. O problema não é a ausência de soluções técnicas, mas a dificuldade de as escalar e de as tornar acessíveis à maioria dos produtores familiares.</p>
+<h2>Género e juventude</h2>
+<p>As mulheres representam uma proporção muito elevada da força de trabalho agrícola, especialmente nas culturas alimentares e no processamento pós-colheita. No entanto, o acesso a terra, a crédito, a insumos e a processos de decisão continua desigual. Programas que não integrem a dimensão de género tendem a reproduzir estas desigualdades.</p>
+<p>Os jovens, por seu lado, mostram uma tendência crescente de abandono do meio rural em busca de oportunidades nas cidades ou no exterior. A agricultura é muitas vezes vista como uma actividade de baixo prestígio e de baixo rendimento, o que dificulta a renovação geracional do sector. Sem medidas que tornem a actividade mais atractiva e rentável, o envelhecimento da população agrícola será um desafio crescente.</p>
+<h2>Alterações climáticas</h2>
+<p>Moçambique é um dos países africanos mais expostos a fenómenos climáticos extremos — ciclones, cheias e secas. A agricultura de sequeiro, dominante no país, é particularmente vulnerável. Cada evento extremo tem custos elevados em perda de produção, destruição de infraestruturas e impacto na segurança alimentar.</p>
+<p>A adaptação — através de variedades mais resistentes, de irrigação, de práticas de conservação de solos e de sistemas de alerta precoce — é uma necessidade urgente. Os números mostram que o custo da inação é superior ao custo do investimento em resiliência.</p>
+<h2>O que os números não dizem sozinhos</h2>
+<p>Os dados estatísticos são essenciais, mas não captam toda a realidade. Por trás dos percentuais de emprego e de contribuição para o PIB estão milhões de decisões diárias de famílias que plantam, colhem, vendem e consomem. A qualidade dessas decisões depende de informação, de acesso a mercados, de preços justos e de um ambiente de políticas públicas previsível.</p>
+<p>Para a Revista TerraBola, a responsabilidade jornalística passa por apresentar os números com rigor e por explicar o que eles significam na vida concreta das pessoas. A agricultura não é um sector residual. É o chão onde assenta a maioria da população e uma parte estrutural da economia. Ignorar esse facto ou tratá-lo de forma superficial é um erro de análise e de prioridade.</p>
+<p>Os números estão claros. O desafio é transformar o conhecimento desses números em políticas e em práticas que realmente elevem a produtividade, a resiliência e o rendimento das famílias que trabalham a terra.</p>
+</div>
+</article>
+</div>
+<!-- ===================== ARTIGO ECONOMIA RURAL ===================== -->
+<div class="page" id="page-economia-rural">
+<article>
+<div class="artigo-header">
+<div class="container">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<div class="article-kicker"><span class="live-now"><i></i> AO VIVO</span><span>EDIÇÃO DIGITAL</span><span class="article-updated">ACTUALIZADO AGORA</span></div>
+<div class="artigo-cat">Economia Rural • Sociedade</div>
+<h1>Como o futebol e a agricultura estão a criar emprego no interior do país</h1>
+<div class="artigo-meta">
+<span>Por Redação TerraBola</span>
+<span>5 de Outubro, 2026</span>
+<span>Maputo / Interior</span>
+</div>
+</div>
+</div>
+<div class="article-tools"><div class="article-tools-inner"><div class="article-status"><span class="status-dot"></span><strong>ACTUALIZAÇÃO</strong><span class="article-stat">Conteúdo editorial recente</span></div><div class="article-actions"><button onclick="partilharArtigo('whatsapp')" type="button">WhatsApp</button><button onclick="partilharArtigo('facebook')" type="button">Facebook</button><button onclick="copiarLinkArtigo()" type="button">Copiar link</button></div></div></div>
+<div class="container">
+<div class="tb-image-badge">IMAGEM EXCLUSIVA</div><img alt="Mercado rural e actividade económica" class="artigo-img-principal" src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1600&amp;q=88"/><div class="photo-source-note">Fotografia editorial real • imagem de stock • não gerada por IA</div>
+</div>
+<div class="artigo-conteudo">
+<p>No interior de Moçambique, duas actividades aparentemente distantes — o futebol e a agricultura — estão a cruzar-se de formas que geram emprego, rendimento e coesão social. Não se trata de uma estratégia formal e coordenada a nível nacional, mas de dinâmicas locais que, quando observadas em conjunto, revelam um potencial ainda pouco explorado de desenvolvimento económico rural.</p>
+<p>Este artigo analisa como o desporto e o campo se articulam na criação de oportunidades de trabalho e de rendimento em distritos e vilas do interior, longe dos grandes centros urbanos.</p>
+<h2>A agricultura como base de emprego</h2>
+<p>A agricultura familiar continua a ser a principal fonte de emprego no meio rural. Cada exploração agrícola, por mais pequena que seja, mobiliza mão-de-obra familiar e, em períodos de ponta — sementeira, monda, colheita —, contrata trabalho sazonal. Nas zonas de culturas de rendimento, como o caju, o tabaco ou o algodão, a comercialização gera também emprego em transporte, armazenamento e comércio local.</p>
+<p>Quando a produção aumenta e os preços se mantêm, o efeito multiplica-se: os produtores gastam mais no comércio local, contratam mais mão-de-obra e investem em pequenas melhorias. Quando a produção falha, o impacto é imediato e sentido em toda a cadeia económica do distrito.</p>
+<p>Os programas de irrigação, de extensão rural e de apoio à comercialização têm, por isso, um efeito directo sobre o emprego. Cada hectare adicional sob irrigação ou cada associação de produtores que consegue negociar melhores preços representa não apenas mais rendimento para as famílias, mas também mais dias de trabalho pagos na comunidade.</p>
+<h2>O futebol como gerador de actividade económica</h2>
+<p>O futebol no interior não se resume ao jogo. Cada clube, mesmo amador, movimenta uma pequena economia. Há treinadores, preparadores, guardas de campo, vendedores de água e de comida nos dias de jogo, transportadores e, em alguns casos, pequenos patrocínios locais de comerciantes. Em vilas e sedes distritais, os jogos de futebol são dos poucos eventos que reúnem regularmente grandes números de pessoas.</p>
+<p>As academias e escolas de formação acrescentam outra camada. Empregam treinadores, por vezes em regime de tempo parcial, e criam procura por material desportivo, campos e serviços de apoio. Quando um jovem da academia consegue um contrato profissional ou uma bolsa de estudos ligada ao desporto, o impacto económico e simbólico na família e na comunidade é significativo.</p>
+<p>Em algumas localidades, clubes e academias começaram a estabelecer parcerias com associações de produtores. O objectivo é simples: o clube ou a academia recebe apoio em géneros ou em numerário, e os produtores ganham visibilidade e, em alguns casos, acesso a redes de comercialização. Estas ligações ainda são pontuais, mas mostram que a articulação é possível.</p>
+<h2>Emprego indirecto e serviços de apoio</h2>
+<p>Tanto a agricultura como o futebol geram emprego indirecto em áreas que muitas vezes escapam às estatísticas oficiais. Mecânicos que reparam motorizadas e bicicletas usadas no transporte de produtos, costureiras que fazem ou reparam equipamentos desportivos, carpinteiros que constroem balizas e bancadas, e pequenos comerciantes que abastecem os mercados nos dias de feira ou de jogo — todos fazem parte desta economia rural diversificada.</p>
+<p>A melhoria de estradas e de ligações de transporte multiplica estes efeitos. Quando um distrito passa a ter melhor acesso a mercados regionais, a produção agrícola ganha valor e os eventos desportivos atraem público de zonas vizinhas. O emprego não aparece apenas na produção ou no campo de jogo, mas em toda a cadeia de serviços que os rodeia.</p>
+<h2>Juventude e retenção no interior</h2>
+<p>Um dos maiores desafios do interior é a saída de jovens para as cidades ou para o exterior. A falta de oportunidades de emprego e de lazer é apontada como um dos principais motivos. Neste contexto, as academias de futebol e as iniciativas agrícolas que oferecem rendimento e perspectiva de progressão têm um papel importante na retenção de população activa.</p>
+<p>Jovens que encontram no futebol uma via de desenvolvimento pessoal e, eventualmente, profissional, ou que conseguem rentabilizar a produção agrícola através de melhores práticas e de acesso a mercados, têm menos incentivo para abandonar as suas comunidades. Isso não resolve todos os problemas de emprego, mas cria âncoras locais que podem ser reforçadas com políticas públicas adequadas.</p>
+<h2>Limitações e riscos</h2>
+<p>É importante não romantizar. A maioria dos empregos gerados pela agricultura familiar e pelo futebol amador é precária, sazonal e mal remunerada. Muitos jovens continuam a ver estas actividades como soluções temporárias e não como carreiras. Sem investimento em produtividade agrícola, em infraestruturas e em profissionalização do desporto de base, o potencial de criação de emprego estável permanece limitado.</p>
+<p>Além disso, a dependência de um único produto agrícola ou de um único clube local cria vulnerabilidades. Diversificar culturas, fortalecer associações de produtores e criar redes de clubes e academias a nível distrital e provincial são formas de reduzir esses riscos.</p>
+<h2>O papel das políticas públicas</h2>
+<p>As políticas públicas podem acelerar ou travar estas dinâmicas. Investimentos em irrigação, em estradas rurais, em extensão agrícola e em instalações desportivas básicas têm efeitos multiplicadores. Programas que liguem explicitamente o desporto de formação ao desenvolvimento rural — por exemplo, através de apoios a academias em zonas de produção agrícola — podem criar sinergias ainda pouco exploradas.</p>
+<p>A coordenação entre o Ministério da Agricultura, o Ministério da Juventude e Desporto e as autoridades locais é fundamental. Sem ela, os projectos tendem a avançar de forma isolada e a perder escala.</p>
+<h2>Conclusão</h2>
+<p>O futebol e a agricultura não vão, por si só, resolver o problema do emprego no interior de Moçambique. Mas ambos já estão a criar trabalho, rendimento e coesão social em dezenas de distritos. Reconhecer essas dinâmicas, medi-las com rigor e reforçá-las com políticas adequadas é uma forma responsável de olhar para o desenvolvimento rural.</p>
+<p>Para a Revista TerraBola, a intersecção entre o campo e o desporto é um tema central. Porque é no interior que vive a maioria da população, e é aí que as soluções de emprego têm de ser construídas — com os pés na terra e, sempre que possível, com a bola nos pés.</p>
+</div>
+</article>
+</div>
+<!-- ARTIGO LIGA -->
+<div class="page" id="page-liga">
+<article>
+<div class="artigo-header">
+<div class="container">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<div class="article-kicker"><span class="live-now"><i></i> AO VIVO</span><span>EDIÇÃO DIGITAL</span><span class="article-updated">ACTUALIZADO AGORA</span></div>
+<div class="artigo-cat">Futebol • Campeonato Nacional</div>
+<h1>Liga Moçambicana 2026/27: calendário, regras e o que muda esta época</h1>
+<div class="artigo-meta"><span>Por Redação TerraBola</span><span>3 de Outubro, 2026</span><span>Maputo</span></div>
+</div>
+</div>
+<div class="article-tools"><div class="article-tools-inner"><div class="article-status"><span class="status-dot"></span><strong>ACTUALIZAÇÃO</strong><span class="article-stat">Conteúdo editorial recente</span></div><div class="article-actions"><button onclick="partilharArtigo('whatsapp')" type="button">WhatsApp</button><button onclick="partilharArtigo('facebook')" type="button">Facebook</button><button onclick="copiarLinkArtigo()" type="button">Copiar link</button></div></div></div>
+<div class="container"><div class="tb-image-badge">IMAGEM EXCLUSIVA</div><img alt="Estádio iluminado" class="artigo-img-principal" src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=1600&amp;q=88"/><div class="photo-source-note">Fotografia editorial real • imagem de stock • não gerada por IA</div></div>
+<div class="artigo-conteudo">
+<p>A Liga Moçambicana de Futebol divulgou o calendário oficial da época 2026/27 e um conjunto de alterações regulamentares que pretendem dar mais estabilidade e credibilidade ao principal campeonato do país. Depois de várias épocas marcadas por adiamentos, conflitos de datas e críticas à organização, a direcção da liga promete cumprir o plano apresentado.</p>
+<p>O campeonato terá 14 equipas e 26 jornadas. A primeira volta começa em meados de Outubro e a segunda em Março de 2027. Há pausas previstas para as competições continentais e para as janelas de convocação da selecção nacional. O objectivo declarado é evitar a sobreposição de compromissos que, em anos anteriores, forçou o adiamento de vários jogos.</p>
+<h2>O que muda nas regras</h2>
+<p>Entre as novidades está o reforço das sanções por violência no relvado e nas bancadas, a obrigação de cada clube apresentar um relatório anual sobre a formação de jovens e a introdução de critérios mais rigorosos de licenciamento. Clubes que não cumpram os requisitos mínimos de infraestrutura e de gestão financeira podem ser impedidos de disputar a competição.</p>
+<p>A liga também anunciou um sistema de arbitragem com maior acompanhamento e a possibilidade de recurso a imagens de vídeo em situações específicas, ainda que de forma limitada. A medida não equivale a um VAR completo, mas representa um passo na direcção de decisões mais transparentes.</p>
+<h2>Impacto nos clubes</h2>
+<p>Para os clubes, o calendário estável é uma das principais reivindicações dos últimos anos. Muitos dirigentes argumentam que a imprevisibilidade dificulta o planeamento financeiro, a contratação de jogadores e a fidelização de adeptos. Com datas fixas, a expectativa é que os clubes consigam negociar melhores contratos de patrocínio e organizar melhor as deslocações.</p>
+<p>Os clubes do interior, em particular, beneficiam de um calendário previsível porque as viagens longas exigem organização logística antecipada. A redução de adiamentos de última hora pode traduzir-se em poupanças significativas e em menos desgaste para os atletas.</p>
+<h2>Formação e fair-play</h2>
+<p>A exigência de relatórios de formação enquadra-se na estratégia mais ampla da Federação e da liga de valorizar o trabalho de base. Cada clube da 1ª Divisão terá de indicar quantos jogadores formados na própria academia integraram o plantel principal e quantos minutos disputaram. O incumprimento pode resultar em penalizações desportivas ou financeiras.</p>
+<p>No domínio do fair-play, a liga reforçou as sanções para agressões a árbitros, confrontos entre adeptos e comportamentos antidesportivos graves. A mensagem é clara: o campeonato precisa de limpar a imagem e de se tornar um produto mais atractivo para patrocinadores e para o público.</p>
+<h2>Desafios que permanecem</h2>
+<p>Apesar das boas intenções, vários problemas estruturais continuam por resolver. A qualidade dos relvados em algumas cidades, a falta de iluminação adequada e as dificuldades de transporte de equipas e de material persistem. Sem investimento paralelo em infraestruturas, o calendário por si só não garante um campeonato de alto nível.</p>
+<p>Outro ponto crítico é a sustentabilidade financeira de vários clubes. Muitos dependem de apoios pontuais de autarquias ou de empresários locais e não têm modelos de negócio estáveis. A liga reconhece o problema, mas admite que a solução passa por um trabalho de longo prazo de profissionalização da gestão desportiva.</p>
+<h2>Perspectivas</h2>
+<p>A época 2026/27 será um teste importante. Se a liga cumprir o calendário, aplicar as regras de forma consistente e conseguir reduzir a violência e os incidentes, o campeonato ganhará credibilidade. Se voltar aos problemas do passado, o discurso de mudança perderá força.</p>
+<p>Para a Revista TerraBola, o acompanhamento será rigoroso. Não basta anunciar regras. É preciso verificar se elas são aplicadas, se os clubes as respeitam e se o produto final — o futebol jogado — melhora de qualidade e de organização.</p>
+</div>
+</article>
+</div>
+<!-- ARTIGO MANDIOCA -->
+<div class="page" id="page-mandioca">
+<article>
+<div class="artigo-header">
+<div class="container">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<div class="article-kicker"><span class="live-now"><i></i> AO VIVO</span><span>EDIÇÃO DIGITAL</span><span class="article-updated">ACTUALIZADO AGORA</span></div>
+<div class="artigo-cat">Agricultura • Culturas Alimentares</div>
+<h1>Mandioca em Moçambique: a cultura que alimenta milhões e ainda é subvalorizada</h1>
+<div class="artigo-meta"><span>Por Redação TerraBola</span><span>2 de Outubro, 2026</span><span>Maputo</span></div>
+</div>
+</div>
+<div class="article-tools"><div class="article-tools-inner"><div class="article-status"><span class="status-dot"></span><strong>ACTUALIZAÇÃO</strong><span class="article-stat">Conteúdo editorial recente</span></div><div class="article-actions"><button onclick="partilharArtigo('whatsapp')" type="button">WhatsApp</button><button onclick="partilharArtigo('facebook')" type="button">Facebook</button><button onclick="copiarLinkArtigo()" type="button">Copiar link</button></div></div></div>
+<div class="container"><div class="tb-image-badge">IMAGEM EXCLUSIVA</div><img alt="Cultivo de mandioca" class="artigo-img-principal" src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=1600&amp;q=88"/><div class="photo-source-note">Fotografia editorial real • imagem de stock • não gerada por IA</div></div>
+<div class="artigo-conteudo">
+<p>A mandioca é uma das culturas alimentares mais importantes de Moçambique. Resistente à seca, adaptável a solos pobres e presente em praticamente todas as regiões do país, ela constitui a base da alimentação de milhões de famílias, especialmente no centro e no norte. Apesar disso, continua a ser tratada, em muitos círculos, como uma cultura de segundo plano.</p>
+<p>Os dados disponíveis mostram que a mandioca ocupa uma área significativa da superfície cultivada e que a produção nacional se situa entre as mais relevantes do continente africano. No entanto, a produtividade por hectare permanece baixa em comparação com o potencial técnico, e o processamento industrial é ainda limitado.</p>
+<h2>O papel na segurança alimentar</h2>
+<p>Em períodos de seca ou de falha de outras culturas, a mandioca funciona como rede de segurança. As suas raízes podem permanecer no solo durante longos períodos e ser colhidas conforme a necessidade da família. Esta flexibilidade é uma das razões pelas quais continua a ser prioritária para os produtores familiares.</p>
+<p>Além do consumo directo em forma de raiz cozida, a mandioca é transformada em farinha, em rale e em outros produtos que entram na dieta diária. Em muitas zonas, substitui ou complementa o milho como fonte principal de hidratos de carbono.</p>
+<h2>Baixa produtividade e oportunidades</h2>
+<p>A produtividade média nacional está longe dos valores obtidos em países que investiram em variedades melhoradas e em práticas de gestão. Em Moçambique, a maioria dos produtores utiliza variedades locais e técnicas tradicionais. A introdução de variedades mais resistentes a pragas e com maior rendimento tem avançado, mas de forma desigual.</p>
+<p>Programas de investigação e de extensão têm demonstrado que é possível aumentar significativamente a produção por hectare com material vegetativo de qualidade e com práticas de plantação adequadas. O desafio é escalar essas soluções e torná-las acessíveis aos produtores de pequena escala.</p>
+<h2>Processamento e valor acrescentado</h2>
+<p>O processamento da mandioca — em farinha, amido, etanol ou produtos alimentares processados — tem potencial para criar emprego e reter valor na economia local. Actualmente, a maior parte da produção é consumida ou comercializada de forma pouco processada. Unidades de processamento de pequena e média escala existem, mas enfrentam dificuldades de abastecimento regular, de energia e de acesso a mercados.</p>
+<p>Investimentos em unidades de processamento próximas das zonas de produção poderiam reduzir as perdas pós-colheita e aumentar o rendimento dos produtores. Para isso, é necessário coordenação entre produtores, processadores e compradores, bem como políticas de apoio ao crédito e à infraestrutura.</p>
+<h2>Investigação e política pública</h2>
+<p>Instituições de investigação agrícolas no país têm trabalhado em variedades de mandioca mais produtivas e resistentes. A disseminação desses materiais depende de sistemas de multiplicação de material vegetativo e de redes de extensão eficazes. Sem esses elos, o conhecimento produzido nos centros de investigação não chega ao campo.</p>
+<p>A nível de política, a mandioca aparece em documentos de segurança alimentar, mas raramente recebe a mesma atenção mediática ou orçamental que culturas de exportação como o caju ou o tabaco. Reequilibrar essa prioridade seria um passo importante para reforçar a base alimentar do país.</p>
+<h2>Conclusão</h2>
+<p>A mandioca alimenta milhões de moçambicanos e é uma das culturas mais adaptadas às condições agroecológicas do país. Tratá-la como cultura secundária é um erro estratégico. Investir em produtividade, em processamento e em mercados para a mandioca é investir directamente na segurança alimentar e no rendimento das famílias rurais.</p>
+<p>Para a Revista TerraBola, este é um tema prioritário. Os números e a realidade no terreno mostram que a mandioca merece mais atenção, mais investigação e mais investimento do que tem recebido até agora.</p>
+</div>
+</article>
+</div>
+<!-- ARTIGO FAIRPLAY -->
+<div class="page" id="page-fairplay">
+<article>
+<div class="artigo-header">
+<div class="container">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<div class="article-kicker"><span class="live-now"><i></i> AO VIVO</span><span>EDIÇÃO DIGITAL</span><span class="article-updated">ACTUALIZADO AGORA</span></div>
+<div class="artigo-cat">Futebol • Disciplina</div>
+<h1>Fair-play e disciplina: a aposta da FMF para limpar a imagem do campeonato</h1>
+<div class="artigo-meta"><span>Por Redação TerraBola</span><span>1 de Outubro, 2026</span><span>Maputo</span></div>
+</div>
+</div>
+<div class="article-tools"><div class="article-tools-inner"><div class="article-status"><span class="status-dot"></span><strong>ACTUALIZAÇÃO</strong><span class="article-stat">Conteúdo editorial recente</span></div><div class="article-actions"><button onclick="partilharArtigo('whatsapp')" type="button">WhatsApp</button><button onclick="partilharArtigo('facebook')" type="button">Facebook</button><button onclick="copiarLinkArtigo()" type="button">Copiar link</button></div></div></div>
+<div class="container"><div class="tb-image-badge">IMAGEM EXCLUSIVA</div><img alt="Campo de futebol" class="artigo-img-principal" src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=1600&amp;q=88"/><div class="photo-source-note">Fotografia editorial real • imagem de stock • não gerada por IA</div></div>
+<div class="artigo-conteudo">
+<p>A Federação Moçambicana de Futebol e a Liga Moçambicana intensificaram, nesta época, as medidas de fair-play e de disciplina desportiva. O objectivo declarado é reduzir a violência no relvado e nas bancadas, proteger árbitros e jogadores e melhorar a imagem do futebol nacional junto do público e dos patrocinadores.</p>
+<p>Nos últimos anos, incidentes de agressão a árbitros, confrontos entre adeptos e comportamentos antidesportivos graves mancharam a reputação do campeonato. Vários jogos foram interrompidos ou adiados por razões de segurança. A situação tornou-se insustentável para quem pretende atrair investimento e público familiar.</p>
+<h2>Medidas concretas</h2>
+<p>Entre as medidas anunciadas estão sanções mais pesadas para agressões, a possibilidade de jogos à porta fechada, a responsabilização dos clubes pelos comportamentos dos seus adeptos e um maior acompanhamento dos processos disciplinares. A FMF prometeu celeridade e transparência nas decisões.</p>
+<p>Foi também reforçada a formação de árbitros e de oficiais de jogo em gestão de conflitos e em comunicação. A ideia é que a autoridade no relvado seja exercida com firmeza, mas também com capacidade de prevenção de escaladas de tensão.</p>
+<h2>Responsabilidade dos clubes</h2>
+<p>Os clubes são agora mais responsabilizados pelo comportamento dos seus adeptos. Em caso de incidentes graves, podem sofrer penalizações de pontos, multas ou obrigação de disputar jogos sem público. A medida visa incentivar os clubes a investir em segurança e em educação dos adeptos.</p>
+<p>Alguns dirigentes argumentam que não controlam totalmente o comportamento de todos os adeptos e que as sanções colectivas podem ser injustas. A FMF responde que a responsabilidade colectiva é uma prática comum no futebol internacional e que só assim se cria incentivo real para a mudança.</p>
+<h2>Impacto na imagem e no negócio</h2>
+<p>Um campeonato associado à violência afasta famílias, patrocinadores e potenciais investidores. A limpeza da imagem é, por isso, também uma questão económica. Clubes e liga precisam de um produto desportivo seguro e credível para negociar direitos de transmissão, patrocínios e apoio institucional.</p>
+<p>Em países onde o fair-play foi priorizado de forma consistente, os resultados a médio prazo foram positivos: mais público, mais estabilidade e melhor ambiente de negócio. Moçambique está no início desse caminho.</p>
+<h2>Desafios de aplicação</h2>
+<p>O sucesso das medidas depende da aplicação consistente e imparcial. Se as sanções forem aplicadas de forma selectiva ou se os processos se arrastarem indefinidamente, a credibilidade do sistema sofre. A transparência nas decisões disciplinares será, por isso, um indicador importante a acompanhar.</p>
+<p>Outro desafio é a cultura desportiva. Mudar comportamentos enraizados leva tempo e exige trabalho de educação, tanto nos clubes como nas escolas e nas comunidades. As sanções são necessárias, mas não suficientes.</p>
+<h2>Conclusão</h2>
+<p>A aposta no fair-play e na disciplina é correcta e necessária. O futebol moçambicano precisa de um ambiente seguro e respeitoso para crescer. A FMF e a liga deram o sinal. Agora falta a aplicação rigorosa e a mudança cultural que transforme as regras em prática quotidiana no relvado e nas bancadas.</p>
+</div>
+</article>
+</div>
+<!-- ARTIGO EXPORTAÇÃO -->
+<div class="page" id="page-exportacao">
+<article>
+<div class="artigo-header">
+<div class="container">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<div class="article-kicker"><span class="live-now"><i></i> AO VIVO</span><span>EDIÇÃO DIGITAL</span><span class="article-updated">ACTUALIZADO AGORA</span></div>
+<div class="artigo-cat">Factos Reais • Economia</div>
+<h1>Exportações agrícolas: os números reais de 2025 e o que esperamos em 2026</h1>
+<div class="artigo-meta"><span>Por Redação TerraBola</span><span>30 de Setembro, 2026</span><span>Maputo</span></div>
+</div>
+</div>
+<div class="article-tools"><div class="article-tools-inner"><div class="article-status"><span class="status-dot"></span><strong>ACTUALIZAÇÃO</strong><span class="article-stat">Conteúdo editorial recente</span></div><div class="article-actions"><button onclick="partilharArtigo('whatsapp')" type="button">WhatsApp</button><button onclick="partilharArtigo('facebook')" type="button">Facebook</button><button onclick="copiarLinkArtigo()" type="button">Copiar link</button></div></div></div>
+<div class="container"><div class="tb-image-badge">IMAGEM EXCLUSIVA</div><img alt="Exportação agrícola" class="artigo-img-principal" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&amp;q=88"/><div class="photo-source-note">Fotografia editorial real • imagem de stock • não gerada por IA</div></div>
+<div class="artigo-conteudo">
+<p>As exportações agrícolas de Moçambique mantiveram um papel relevante na balança comercial em 2025, apesar das dificuldades logísticas e das flutuações de preços internacionais. Os principais produtos — caju, tabaco, açúcar, algodão e, em menor escala, gergelim e outras oleaginosas — continuaram a gerar receitas em divisas e a sustentar milhares de famílias produtoras.</p>
+<p>Os dados oficiais e de associações de produtores apontam para um desempenho positivo no caju, com volumes recordes em Nampula e noutras zonas produtoras. O tabaco e o açúcar mantiveram contribuições importantes, embora sujeitos a pressões de preço e a desafios de competitividade.</p>
+<h2>O peso do caju</h2>
+<p>O caju consolidou-se como um dos pilares das exportações agrícolas. O aumento de 18% na produção comercializada em 2025 reflectiu-se em maior volume exportado, sobretudo de castanha em bruto. O processamento local continua abaixo do potencial, o que limita o valor acrescentado que fica no país.</p>
+<p>Os preços internacionais influenciaram directamente o rendimento dos produtores. Em anos de preços firmes, o impacto nas comunidades rurais é visível. Em anos de queda, a vulnerabilidade torna-se evidente. A diversificação de mercados e o aumento do processamento local são caminhos apontados para reduzir essa exposição.</p>
+<h2>Outros produtos</h2>
+<p>O tabaco permanece uma cultura de rendimento importante em várias províncias, com uma cadeia organizada e compradores estabelecidos. O açúcar, produzido em grandes unidades agro-industriais, contribui de forma significativa para as exportações, mas enfrenta concorrência regional e internacional.</p>
+<p>O algodão e o gergelim têm potencial de crescimento, especialmente se os produtores tiverem acesso a sementes de qualidade, a extensão e a mercados estáveis. A irregularidade do abastecimento e a qualidade variável da produção limitam, por vezes, a expansão das exportações destes produtos.</p>
+<h2>Desafios estruturais</h2>
+<p>A logística continua a ser um dos maiores obstáculos. Estradas em mau estado, custos de transporte elevados e congestão nos portos aumentam o custo de colocar os produtos no mercado internacional. Estes custos reduzem a competitividade e a margem dos produtores e dos exportadores.</p>
+<p>A dependência de poucos produtos e de poucos mercados de destino cria vulnerabilidade. Uma queda de preços no caju ou uma restrição num mercado importante pode ter efeitos em cadeia. A diversificação — tanto de produtos como de destinos — é uma prioridade estratégica ainda pouco consolidada.</p>
+<h2>Perspectivas para 2026</h2>
+<p>Para 2026, as expectativas são cautelosas. As condições climáticas, a evolução dos preços internacionais e a capacidade de manter ou melhorar a logística serão determinantes. O investimento em processamento local, se materializado, pode começar a alterar a composição das exportações no médio prazo.</p>
+<p>A política pública tem um papel central: apoio à renovação de plantações, extensão rural, infraestrutura e ambiente de negócios previsível. Sem esses elementos, o potencial exportador agrícola permanece abaixo do que o país poderia alcançar.</p>
+<h2>Conclusão</h2>
+<p>Os números de 2025 mostram que a agricultura de exportação continua a ser um motor importante da economia rural e das receitas externas. Mas os mesmos números revelam fragilidades: baixa taxa de processamento, dependência de poucos produtos e custos logísticos elevados. Corrigir estas fragilidades é a tarefa dos próximos anos.</p>
+</div>
+</article>
+</div>
+<!-- ARTIGO JOVENS NO CAMPO -->
+<div class="page" id="page-jovens-campo">
+<article>
+<div class="artigo-header">
+<div class="container">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<div class="article-kicker"><span class="live-now"><i></i> AO VIVO</span><span>EDIÇÃO DIGITAL</span><span class="article-updated">ACTUALIZADO AGORA</span></div>
+<div class="artigo-cat">Agricultura • Juventude</div>
+<h1>Jovens no campo: por que a agricultura familiar precisa de nova geração</h1>
+<div class="artigo-meta"><span>Por Redação TerraBola</span><span>28 de Setembro, 2026</span><span>Maputo</span></div>
+</div>
+</div>
+<div class="article-tools"><div class="article-tools-inner"><div class="article-status"><span class="status-dot"></span><strong>ACTUALIZAÇÃO</strong><span class="article-stat">Conteúdo editorial recente</span></div><div class="article-actions"><button onclick="partilharArtigo('whatsapp')" type="button">WhatsApp</button><button onclick="partilharArtigo('facebook')" type="button">Facebook</button><button onclick="copiarLinkArtigo()" type="button">Copiar link</button></div></div></div>
+<div class="container"><div class="tb-image-badge">IMAGEM EXCLUSIVA</div><img alt="Jovens no campo" class="artigo-img-principal" src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1600&amp;q=88"/><div class="photo-source-note">Fotografia editorial real • imagem de stock • não gerada por IA</div></div>
+<div class="artigo-conteudo">
+<p>A agricultura familiar em Moçambique enfrenta um desafio demográfico silencioso: o envelhecimento dos produtores e a saída de jovens para as cidades ou para o exterior. Sem uma nova geração interessada e preparada para continuar e modernizar a actividade, a base produtiva do país corre o risco de se enfraquecer.</p>
+<p>Os dados e os relatos de campo mostram que muitos jovens veem a agricultura como uma actividade de baixo prestígio, de baixo rendimento e de muito trabalho. Preferem tentar a sorte no comércio informal urbano, na construção ou na emigração. O resultado é uma mão-de-obra agrícola cada vez mais envelhecida e uma renovação geracional insuficiente.</p>
+<h2>Por que os jovens saem</h2>
+<p>As razões são conhecidas: acesso limitado a terra própria, falta de crédito, ausência de serviços de extensão atractivos, mercados instáveis e falta de infraestruturas básicas nas zonas rurais. Sem perspectiva de progresso económico e social, o campo deixa de ser uma opção de vida e passa a ser um lugar de onde se parte.</p>
+<p>Além disso, a imagem da agricultura familiar está associada a pobreza e a atraso. Poucos jovens a vêem como um negócio moderno, tecnificado e rentável. Mudar essa percepção exige exemplos concretos de sucesso e políticas que tornem a actividade mais atractiva.</p>
+<h2>O que pode reter e atrair jovens</h2>
+<p>Experiências em vários países africanos mostram que o acesso a terra, a crédito, a tecnologia e a mercados pode inverter a tendência. Quando os jovens conseguem produzir de forma mais produtiva e vender a preços justos, a agricultura passa a ser vista como oportunidade e não apenas como obrigação.</p>
+<p>Programas de formação técnica, de empreendedorismo agrícola e de apoio a cooperativas de jovens têm potencial. A irrigação, as variedades melhoradas e o processamento local podem aumentar a rentabilidade e tornar a actividade mais interessante. O futebol e outras actividades desportivas e culturais no meio rural também ajudam a criar um ambiente de vida mais atractivo.</p>
+<h2>O papel das políticas públicas</h2>
+<p>As políticas de juventude e de agricultura precisam de se cruzar de forma mais deliberada. Apoios específicos a jovens produtores, facilitação do acesso a terra e a financiamento, e investimento em infraestruturas rurais são elementos centrais. Sem eles, os apelos para “ficar no campo” soam vazios.</p>
+<p>As escolas e os institutos de formação agrícola têm um papel importante na preparação técnica e na mudança de mentalidade. Formar jovens para a agricultura moderna, e não apenas para a agricultura de subsistência, é essencial.</p>
+<h2>Conclusão</h2>
+<p>A agricultura familiar precisa de uma nova geração. Sem jovens no campo, a produção alimentar, o emprego rural e a coesão das comunidades ficam ameaçados. Criar condições para que os jovens escolham ficar — e prosperar — no campo é uma prioridade estratégica para o país. Os números e a realidade no terreno não deixam dúvidas.</p>
+</div>
+</article>
+</div>
+<!-- ===================== PÁGINAS INSTITUCIONAIS ===================== -->
+<div class="page" id="page-privacidade">
+<section class="legal-page">
+<div class="container legal-wrap">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<h1>Política de Privacidade</h1>
+<div class="legal-updated">Última actualização: 8 de Outubro de 2026</div>
+<p>A Revista TerraBola respeita a privacidade dos seus leitores. Esta política explica, de forma simples, que informações podem ser tratadas quando utiliza este site e para que finalidades.</p>
+<h2>1. Informações que podemos receber</h2>
+<p>Podemos receber informações que o visitante fornece voluntariamente, por exemplo quando entra em contacto connosco por e-mail ou WhatsApp. Também podem ser recolhidos dados técnicos básicos necessários ao funcionamento e segurança do site, como tipo de dispositivo, navegador, endereço IP e páginas visitadas, dependendo das ferramentas utilizadas no site.</p>
+<h2>2. Como utilizamos as informações</h2>
+<p>As informações podem ser utilizadas para responder a mensagens, melhorar a experiência de navegação, manter a segurança do site, compreender o desempenho das páginas e cumprir obrigações legais aplicáveis.</p>
+<h2>3. Partilha de informações</h2>
+<p>Não vendemos os dados pessoais dos nossos leitores. Informações podem ser partilhadas apenas quando necessário para prestar um serviço solicitado, proteger os direitos e a segurança da Revista TerraBola, ou cumprir uma obrigação legal.</p>
+<h2>4. Ligações externas</h2>
+<p>O site pode conter ligações para serviços de terceiros. Esses serviços possuem as suas próprias políticas de privacidade e a Revista TerraBola não controla as práticas de tratamento de dados de sites externos.</p>
+<h2>5. Segurança</h2>
+<p>Adoptamos medidas razoáveis para proteger as informações tratadas através do site. Nenhum sistema de transmissão ou armazenamento electrónico pode, contudo, ser considerado absolutamente seguro.</p>
+<h2>6. Direitos e contacto</h2>
+<p>Para esclarecer dúvidas sobre privacidade, solicitar informações sobre um contacto enviado por si ou apresentar uma preocupação, escreva para <a href="mailto:redacao@terrabola.co.mz">redacao@terrabola.co.mz</a> ou utilize o WhatsApp <a href="https://wa.me/258876185403" rel="noopener" target="_blank">+258 87 618 5403</a>.</p>
+<p>Esta política pode ser actualizada quando houver alterações no site, nos serviços utilizados ou nas exigências legais.</p>
+<div class="legal-actions">
+<a onclick="mostrarPagina('cookies')">Política de Cookies</a>
+<a onclick="mostrarPagina('termos')">Termos de Uso</a>
+<a onclick="mostrarPagina('contacto')">Contacto</a>
+</div>
+</div>
+</section>
+</div>
+<div class="page" id="page-cookies">
+<section class="legal-page">
+<div class="container legal-wrap">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<h1>Política de Cookies</h1>
+<div class="legal-updated">Última actualização: 8 de Outubro de 2026</div>
+<p>Cookies são pequenos ficheiros ou identificadores armazenados no dispositivo do visitante para permitir que um site funcione correctamente, memorize determinadas preferências ou produza informações estatísticas.</p>
+<h2>1. Como utilizamos cookies</h2>
+<p>A Revista TerraBola pode utilizar cookies estritamente necessários para o funcionamento do site e, quando forem instaladas ferramentas de análise ou funcionalidades externas, cookies ou tecnologias semelhantes associados a esses serviços.</p>
+<h2>2. Cookies necessários</h2>
+<p>Alguns cookies podem ser essenciais para funcionalidades técnicas, segurança, navegação e manutenção das preferências. Sem eles, determinadas funcionalidades podem não funcionar correctamente.</p>
+<h2>3. Cookies de análise e terceiros</h2>
+<p>Se ferramentas de análise ou conteúdo incorporado de terceiros forem utilizados no futuro, esses serviços poderão definir os seus próprios cookies. O tratamento será sujeito às políticas dos respectivos fornecedores.</p>
+<h2>4. Como controlar cookies</h2>
+<p>O visitante pode configurar o navegador para bloquear ou eliminar cookies. O bloqueio de determinados cookies pode afectar algumas funcionalidades do site.</p>
+<h2>5. Alterações</h2>
+<p>Esta política pode ser actualizada quando forem adicionadas novas funcionalidades, ferramentas ou serviços ao site.</p>
+<div class="legal-actions">
+<a onclick="mostrarPagina('privacidade')">Política de Privacidade</a>
+<a onclick="mostrarPagina('termos')">Termos de Uso</a>
+<a onclick="mostrarPagina('contacto')">Contacto</a>
+</div>
+</div>
+</section>
+</div>
+<div class="page" id="page-termos">
+<section class="legal-page">
+<div class="container legal-wrap">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<h1>Termos de Uso</h1>
+<div class="legal-updated">Última actualização: 8 de Outubro de 2026</div>
+<p>Ao utilizar a Revista TerraBola, o visitante concorda em utilizar o site de forma lícita, responsável e respeitosa.</p>
+<h2>1. Conteúdo editorial</h2>
+<p>O conteúdo é publicado para fins informativos e jornalísticos. Datas, números, declarações e previsões podem depender das fontes disponíveis no momento da publicação. O leitor deve considerar a data e o contexto de cada artigo.</p>
+<h2>2. Uso permitido</h2>
+<p>É permitido consultar, partilhar e citar o conteúdo de forma responsável, desde que a Revista TerraBola seja identificada como fonte e que não seja sugerida uma autoria ou parceria inexistente.</p>
+<h2>3. Propriedade intelectual</h2>
+<p>Textos, identidade visual, estrutura editorial e outros elementos próprios da Revista TerraBola são protegidos pelas normas aplicáveis. A reprodução integral ou utilização comercial de material protegido depende de autorização prévia, salvo quando a lei permitir.</p>
+<h2>4. Conteúdo de terceiros</h2>
+<p>Algumas imagens, fontes ou ligações podem pertencer a terceiros. Os respectivos direitos permanecem com os seus titulares e devem ser respeitados.</p>
+<h2>5. Disponibilidade do site</h2>
+<p>Podemos alterar, suspender ou actualizar funcionalidades do site sem aviso prévio. Procuramos manter o serviço disponível e seguro, mas não garantimos funcionamento ininterrupto.</p>
+<h2>6. Contacto</h2>
+<p>Questões sobre este site podem ser enviadas para <a href="mailto:redacao@terrabola.co.mz">redacao@terrabola.co.mz</a> ou pelo WhatsApp <a href="https://wa.me/258876185403" rel="noopener" target="_blank">+258 87 618 5403</a>.</p>
+<div class="legal-actions">
+<a onclick="mostrarPagina('privacidade')">Política de Privacidade</a>
+<a onclick="mostrarPagina('cookies')">Política de Cookies</a>
+<a onclick="mostrarPagina('contacto')">Contacto</a>
+</div>
+</div>
+</section>
+</div>
+<div class="page" id="page-contacto">
+<section class="legal-page">
+<div class="container legal-wrap">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<h1>Contacto</h1>
+<div class="legal-updated">Fale directamente com a Revista TerraBola</div>
+<p>Para sugestões de pauta, correcções, esclarecimentos, informações institucionais ou assuntos editoriais, entre em contacto com a nossa redacção.</p>
+<h2>E-mail</h2>
+<p><a href="mailto:redacao@terrabola.co.mz">redacao@terrabola.co.mz</a></p>
+<h2>WhatsApp</h2>
+<p><a href="https://wa.me/258876185403" rel="noopener" target="_blank">+258 87 618 5403</a></p>
+<h2>Localização</h2>
+<p>Maputo, Moçambique.</p>
+<div class="legal-actions">
+<a href="https://wa.me/258876185403" rel="noopener" target="_blank">Abrir WhatsApp</a>
+<a href="mailto:redacao@terrabola.co.mz">Enviar e-mail</a>
+</div>
+</div>
+</section>
+</div>
+<div class="page" id="page-politica-editorial">
+<section class="legal-page">
+<div class="container legal-wrap">
+<a class="voltar" onclick="mostrarPagina('home')">← Voltar ao início</a>
+<h1>Política Editorial</h1>
+<div class="legal-updated">Última actualização: 8 de Outubro de 2026</div>
+<p>A Revista TerraBola procura publicar informação clara, responsável e contextualizada sobre futebol, agricultura e factos relevantes de Moçambique.</p>
+<h2>Independência e responsabilidade</h2>
+<p>Procuramos separar informação editorial de interesses comerciais e indicar, sempre que possível, a origem dos dados e declarações utilizados nas matérias.</p>
+<h2>Correcções</h2>
+<p>Quando identificarmos um erro factual relevante, procuraremos corrigi-lo de forma transparente. Os leitores podem comunicar possíveis erros através dos canais de contacto.</p>
+<h2>Fontes e contexto</h2>
+<p>Dados, declarações e informações atribuídas a terceiros devem ser tratados de acordo com o contexto em que foram apresentados. Quando uma informação depender de actualização, a data da publicação deve ser considerada.</p>
+<div class="legal-actions">
+<a onclick="mostrarPagina('contacto')">Contactar a redacção</a>
+<a onclick="mostrarPagina('privacidade')">Privacidade</a>
+</div>
+</div>
+</section>
+</div>
+<!-- FOOTER -->
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div>
+<h4>Revista TerraBola</h4>
+<p>Informação responsável sobre futebol, agricultura e factos reais de Moçambique.</p>
+<p>Maputo, Moçambique</p>
+</div>
+<div>
+<h4>Navegação</h4>
+<a onclick="mostrarPagina('home')">Início</a>
+<a onclick="mostrarPagina('home'); setTimeout(()=&gt;document.getElementById('sec-futebol').scrollIntoView({behavior:'smooth'}),100)">Futebol</a>
+<a onclick="mostrarPagina('home'); setTimeout(()=&gt;document.getElementById('sec-agricultura').scrollIntoView({behavior:'smooth'}),100)">Agricultura</a>
+<a onclick="mostrarPagina('home'); setTimeout(()=&gt;document.getElementById('sec-factos').scrollIntoView({behavior:'smooth'}),100)">Factos Reais</a>
+</div>
+<div>
+<h4>Informações</h4>
+<a onclick="mostrarPagina('privacidade')">Política de Privacidade</a>
+<a onclick="mostrarPagina('cookies')">Política de Cookies</a>
+<a onclick="mostrarPagina('termos')">Termos de Uso</a>
+<a onclick="mostrarPagina('politica-editorial')">Política Editorial</a>
+</div>
+<div>
+<h4>Contacto</h4>
+<a href="mailto:redacao@terrabola.co.mz">redacao@terrabola.co.mz</a>
+<a href="https://wa.me/258876185403" rel="noopener" target="_blank">WhatsApp: +258 87 618 5403</a>
+<a onclick="mostrarPagina('contacto')">Página de contacto</a>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2026 Revista TerraBola. Todos os direitos reservados.</p>
+<p style="margin-top:8px;">
+<a onclick="mostrarPagina('privacidade')" style="display:inline;">Privacidade</a> ·
+          <a onclick="mostrarPagina('cookies')" style="display:inline;">Cookies</a> ·
+          <a onclick="mostrarPagina('termos')" style="display:inline;">Termos</a> ·
+          <a onclick="mostrarPagina('contacto')" style="display:inline;">Contacto</a>
+</p>
+</div>
+</div>
+</footer>
+<!-- BOTÃO WHATSAPP -->
+<a aria-label="Contactar a Revista TerraBola pelo WhatsApp" class="whatsapp-float" href="https://wa.me/258876185403?text=Olá%20Revista%20TerraBola%2C%20gostaria%20de%20entrar%20em%20contacto." rel="noopener" target="_blank" title="WhatsApp">
+<span aria-hidden="true">
+<svg fill="currentColor" height="28" viewbox="0 0 24 24" width="28">
+<path d="M20.5 3.5A11.84 11.84 0 0 0 12.06 0C5.52 0 .2 5.32.2 11.86c0 2.09.55 4.13 1.59 5.93L.1 24l6.35-1.66a11.87 11.87 0 0 0 5.61 1.42h.01c6.54 0 11.86-5.32 11.86-11.86 0-3.17-1.23-6.15-3.43-8.4ZM12.07 21.75h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.77.99 1.01-3.67-.23-.38a9.86 9.86 0 1 1 8.39 4.65Zm5.41-7.4c-.3-.15-1.78-.88-2.05-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.96 1.18-.18.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.67-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.68-1.64-.93-2.25-.25-.6-.5-.52-.68-.53h-.58c-.2 0-.53.08-.8.38-.28.3-1.05 1.03-1.05 2.5s1.08 2.9 1.23 3.1c.15.2 2.12 3.24 5.13 4.54.72.31 1.28.5 1.72.64.72.23 1.37.2 1.89.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.43-.08-.13-.28-.2-.58-.35Z"></path>
+</svg>
+</span>
+</a>
+<script>
+    
+    /* ===== FUNCIONALIDADES EDITORIAIS ===== */
+    const articleImages = {
+      'selecao':'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1600&q=88',
+      'caju':'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1600&q=88',
+      'irrigacao':'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1600&q=88',
+      'futebol-base':'https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=1600&q=88',
+      'factos':'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&q=88',
+      'economia-rural':'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1600&q=88',
+      'liga':'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=1600&q=88',
+      'mandioca':'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1600&q=88',
+      'fairplay':'https://images.unsplash.com/photo-1459865264687-595d652de67e?w=1600&q=88',
+      'exportacao':'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&q=88',
+      'jovens-campo':'https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=1600&q=88'
+    };
+
+    function prepararIdentidadeEditorial(){
+      /* Identidade editorial forte em TODOS os artigos */
+      document.querySelectorAll('.page article').forEach(article=>{
+        const header=article.querySelector('.artigo-header');
+        if(!header) return;
+        const kicker=header.querySelector('.article-kicker');
+        if(!kicker){
+          const k=document.createElement('div'); k.className='article-kicker';
+          k.innerHTML='<span class="live-now"><i></i> AO VIVO</span><span>EDIÇÃO DIGITAL</span><span class="article-updated">ACTUALIZADO AGORA</span>';
+          const cat=header.querySelector('.artigo-cat'); if(cat) cat.before(k); else header.querySelector('.container')?.prepend(k);
+        }
+      });
+
+      /* sinal de actualidade nos cartões da página inicial */
+      document.querySelectorAll('.page#page-home a, .page#page-home .card, .page#page-home .news-card, .page#page-home .article-card').forEach(card=>{
+        if(card.querySelector('.tb-fresh')) return;
+        const target=card.querySelector('h2,h3,h4');
+        if(target){const b=document.createElement('span');b.className='tb-fresh';b.innerHTML='<i></i> Ao vivo • recente';target.parentNode.insertBefore(b,target);}
+      });
+    }
+
+    function prepararArtigos(){
+      document.querySelectorAll('.page article').forEach(article=>{
+        const page=article.closest('.page'); if(!page) return;
+        const id=page.id.replace('page-','');
+        const header=article.querySelector('.artigo-header');
+        const img=article.querySelector('.artigo-img-principal');
+        if(header && articleImages[id]) header.style.setProperty('--article-bg',`url("${articleImages[id]}")`);
+        if(img && articleImages[id]) img.src=articleImages[id];
+        const content=article.querySelector('.artigo-conteudo');
+        if(content && !content.querySelector('.article-share-line')){
+          const share=document.createElement('div'); share.className='article-share-line';
+          share.innerHTML='<span>Partilhar</span><button type="button" onclick="partilharArtigo(\'whatsapp\')">WhatsApp</button><button type="button" onclick="partilharArtigo(\'facebook\')">Facebook</button><button type="button" onclick="copiarLinkArtigo()">Copiar link</button><span class="article-reading" id="reading-'+id+'">Leitura editorial</span>';
+          content.insertBefore(share,content.firstChild);
+          const words=(content.innerText||'').trim().split(/\s+/).length;
+          const mins=Math.max(1,Math.round(words/210));
+          share.querySelector('.article-reading').textContent='• '+mins+' min de leitura';
+        }
+      });
+    }
+    function paginaAtual(){return document.querySelector('.page.active article')}
+    function partilharArtigo(tipo){
+      const article=paginaAtual(); if(!article) return;
+      const title=article.querySelector('h1')?.innerText||document.title;
+      const url=location.href;
+      if(tipo==='whatsapp') window.open('https://wa.me/?text='+encodeURIComponent(title+' — '+url),'_blank');
+      if(tipo==='facebook') window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url),'_blank');
+    }
+    function copiarLinkArtigo(){
+      const url=location.href;
+      if(navigator.clipboard) navigator.clipboard.writeText(url).then(()=>mostrarToast('Link copiado'));
+      else mostrarToast('Copie o endereço desta página');
+    }
+    function mostrarToast(msg){
+      let t=document.getElementById('site-toast');
+      if(!t){t=document.createElement('div');t.id='site-toast';Object.assign(t.style,{position:'fixed',left:'50%',bottom:'22px',transform:'translateX(-50%)',background:'#fff',color:'#111',padding:'10px 15px',fontWeight:'800',fontSize:'12px',zIndex:'10000',boxShadow:'0 10px 30px rgba(0,0,0,.4)'});document.body.appendChild(t)}
+      t.textContent=msg;t.style.opacity='1';clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.style.opacity='0',1800);
+    }
+    function actualizarProgresso(){
+      const active=document.querySelector('.page.active article'); const bar=document.querySelector('.reading-progress'); if(!bar) return;
+      if(!active){bar.style.width='0';return}
+      const rect=active.getBoundingClientRect(); const total=active.offsetHeight-window.innerHeight; const done=Math.max(0,Math.min(1,(-rect.top)/Math.max(1,total))); bar.style.width=(done*100)+'%';
+    }
+    prepararArtigos();
+    window.addEventListener('scroll',actualizarProgresso,{passive:true});
+
+    function mostrarPagina(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const page = document.getElementById('page-' + id);
+      if (page) {
+        page.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(actualizarProgresso, 120);
+      }
+    }
+
+    // Slideshow da imagem principal do hero - muda a cada 1.5 segundos
+    (function() {
+      const slides = document.querySelectorAll('#heroSlides img');
+      if (!slides.length) return;
+      let atual = 0;
+      setInterval(function() {
+        slides[atual].classList.remove('active');
+        atual = (atual + 1) % slides.length;
+        slides[atual].classList.add('active');
+      }, 1500);
+    })();
+  function actualizarSeloAoVivo(){const agora=new Date();const hora=agora.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});document.querySelectorAll('.article-updated').forEach(el=>el.textContent='ACTUALIZADO '+hora)}setInterval(actualizarSeloAoVivo,30000);actualizarSeloAoVivo();
+</script>
+
+<!-- TERRA BOLA: imagens dinâmicas via Pexels API -->
+<style>
+  .tb-api-credit{font-size:10px;color:#777;margin:6px 0 12px;text-align:right}
+  .tb-api-loading{opacity:.65;filter:saturate(.75);transition:opacity .25s ease}
+</style>
+<script>
+(function(){
+  'use strict';
+  // COLOQUE AQUI A SUA CHAVE DA PEXELS.
+  // Nunca publique uma chave real em código público se puder usar um backend/proxy.
+  const PEXELS_API_KEY = 'COLOQUE_AQUI_A_SUA_CHAVE_PEXELS';
+  const CACHE_KEY = 'terrabola_pexels_used_v1';
+  const CACHE_TIME_KEY = 'terrabola_pexels_time_v1';
+  const CACHE_TTL = 1000 * 60 * 60 * 6; // 6 horas
+
+  const queries = [
+    'Mozambique football soccer stadium',
+    'cashew farming agriculture',
+    'irrigation farming water field',
+    'young football players training',
+    'agriculture crops farm field',
+    'rural market agriculture Africa',
+    'football stadium match',
+    'cassava farming harvest',
+    'football referee fair play',
+    'agriculture export crops',
+    'young farmers agriculture',
+    'football stadium infrastructure',
+    'farmers working field',
+    'African agriculture rural community'
+  ];
+
+  const fallbackByAlt = {
+    'Plantação de caju':'cashew farming',
+    'Campo agrícola':'agriculture farm field',
+    'Jovens a jogar futebol':'young football players training',
+    'Sistema de irrigação':'irrigation farming water',
+    'Mercado agrícola':'rural agriculture market',
+    'Campos de cultivo':'crop farm field',
+    'Estádio iluminado':'football stadium',
+    'Cultivo de mandioca':'cassava farming',
+    'Campo de futebol':'soccer football field',
+    'Exportação agrícola':'agriculture export',
+    'Jovens no campo':'young farmers agriculture',
+    'Infraestruturas desportivas':'football stadium infrastructure',
+    'Cajueiros':'cashew trees farm',
+    'Irrigação':'irrigation agriculture',
+    'Campos':'farm fields',
+    'Mercado':'rural market agriculture',
+    'Comunidade':'rural community Africa',
+    'Caju':'cashew nuts',
+    'Água na agricultura':'water irrigation agriculture',
+    'Campos verdes':'green farm fields'
+  };
+
+  function getUsed(){
+    try{
+      const t=Number(localStorage.getItem(CACHE_TIME_KEY)||0);
+      if(Date.now()-t>CACHE_TTL){localStorage.removeItem(CACHE_KEY);localStorage.setItem(CACHE_TIME_KEY,String(Date.now()));return new Set();}
+      return new Set(JSON.parse(localStorage.getItem(CACHE_KEY)||'[]'));
+    }catch(e){return new Set();}
+  }
+  function saveUsed(set){
+    try{
+      const arr=[...set].slice(-500);
+      localStorage.setItem(CACHE_KEY,JSON.stringify(arr));
+      localStorage.setItem(CACHE_TIME_KEY,String(Date.now()));
+    }catch(e){}
+  }
+  function randomPage(totalPages){
+    return Math.max(1,Math.min(totalPages||8,Math.floor(Math.random()*(totalPages||8))+1));
+  }
+  async function getPhoto(query,used){
+    const page=randomPage(8);
+    const url='https://api.pexels.com/v1/search?query='+encodeURIComponent(query)+'&orientation=landscape&size=large&per_page=80&page='+page;
+    const res=await fetch(url,{headers:{Authorization:PEXELS_API_KEY}});
+    if(!res.ok) throw new Error('Pexels HTTP '+res.status);
+    const data=await res.json();
+    let pool=(data.photos||[]).filter(x=>x && x.id && !used.has(String(x.id)));
+    if(!pool.length) pool=data.photos||[];
+    if(!pool.length) throw new Error('Sem fotos para '+query);
+    const photo=pool[Math.floor(Math.random()*pool.length)];
+    used.add(String(photo.id));
+    return photo;
+  }
+  function addCredit(img,photo){
+    const parent=img.parentElement;
+    if(!parent) return;
+    if(parent.querySelector('.tb-api-credit')) return;
+    const credit=document.createElement('div');
+    credit.className='tb-api-credit';
+    credit.innerHTML='Foto de <a href="'+photo.url+'" target="_blank" rel="noopener">'+(photo.photographer||'fotógrafo Pexels')+'</a> · Fotos fornecidas por <a href="https://www.pexels.com/" target="_blank" rel="noopener">Pexels</a>';
+    parent.appendChild(credit);
+  }
+  async function updateImages(){
+    if(!PEXELS_API_KEY || PEXELS_API_KEY.indexOf('COLOQUE_AQUI')===0) return;
+    const imgs=[...document.querySelectorAll('.artigo-img-principal, .hero-side-card img, .cards-grid .card img, .hero-main img')];
+    const used=getUsed();
+    let qIndex=0;
+    for(const img of imgs){
+      if(img.dataset.tbApiDone==='1') continue;
+      const query=img.dataset.photoQuery || fallbackByAlt[img.getAttribute('alt')] || queries[qIndex++%queries.length];
+      img.dataset.tbApiDone='1';
+      img.classList.add('tb-api-loading');
+      try{
+        const photo=await getPhoto(query,used);
+        img.src=photo.src.large2x || photo.src.large || photo.src.original;
+        img.alt=img.alt || photo.alt || query;
+        img.dataset.pexelsId=photo.id;
+        addCredit(img,photo);
+      }catch(e){
+        console.warn('TerraBola: não foi possível actualizar imagem',query,e);
+      }finally{
+        img.classList.remove('tb-api-loading');
+      }
+      // pequena pausa para não disparar dezenas de chamadas ao mesmo tempo
+      await new Promise(r=>setTimeout(r,120));
+    }
+    saveUsed(used);
+  }
+
+  window.TerraBolaImages={update:updateImages};
+  document.addEventListener('DOMContentLoaded',function(){
+    setTimeout(updateImages,500);
+  });
+  // Quando uma página/artigo for aberto dinamicamente, actualiza as imagens novas.
+  const oldMostrar=window.mostrarPagina;
+  if(typeof oldMostrar==='function'){
+    window.mostrarPagina=function(){
+      const result=oldMostrar.apply(this,arguments);
+      setTimeout(updateImages,350);
+      return result;
+    };
+  }
+})();
+</script>
+
+</body>
+</html>
